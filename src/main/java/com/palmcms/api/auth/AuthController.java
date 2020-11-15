@@ -51,7 +51,7 @@ public class AuthController {
 
         if ( bindingResult.hasErrors() )
         {
-            return new LoginResultVO(bindingResult, messageService.getMessage(Messages.AUTH_INVALID_PARAMETER));
+            return new LoginResultVO(messageService.getMessage(Messages.AUTH_INVALID_PARAMETER), bindingResult);
         }
 
         Optional<UserDTO> oUserDTO = userService.selectUserByUserLoginId(loginDTO.getLoginId());
@@ -111,9 +111,9 @@ class LoginResultVO extends ResultVO {
     public LoginResultVO(String resultCode, String message) {
         super(resultCode, message);
     }
-    public LoginResultVO(BindingResult bindingResult, String message)
+    public LoginResultVO(String message, BindingResult bindingResult)
     {
-        super(bindingResult, message);
+        super(message, bindingResult);
     }
 
     public LoginResultVO(String token)

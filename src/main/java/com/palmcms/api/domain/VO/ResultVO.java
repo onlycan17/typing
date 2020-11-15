@@ -38,11 +38,18 @@ public class ResultVO {
     this.error = error;
   }
 
-  public ResultVO(BindingResult bindingResult, String message)
+  public ResultVO(String message, BindingResult bindingResult)
   {
     this.resultCode = "fail";
     this.message = message;
     this.error = bindingResult.getAllErrors().toString();
+  }
+
+  public ResultVO(String message, Exception ex)
+  {
+    this.resultCode = "fail";
+    this.message = message;
+    this.error = ex.toString();
   }
 
 }
