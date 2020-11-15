@@ -7,9 +7,11 @@ spring:
     maximum-pool-size: 15
     minimum-idle: 15
 
-
 server:
   port: 8091
+
+palmcms:
+  tokenTimeoutMinute: 1440
 
 
 

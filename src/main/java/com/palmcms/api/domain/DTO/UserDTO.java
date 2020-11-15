@@ -12,10 +12,12 @@ import java.sql.Timestamp;
 @Setter
 public class UserDTO implements Serializable {
 
+    @JsonIgnore
     private Integer id;
 
     private String userLoginId;
 
+    @JsonIgnore
     private String userPasswordHash;
 
     private String userName;
@@ -23,6 +25,8 @@ public class UserDTO implements Serializable {
     private String proviName;
 
     private String nickName;
+
+    private String socialRegNumber;
 
     private UserStatusType userStatus;
 

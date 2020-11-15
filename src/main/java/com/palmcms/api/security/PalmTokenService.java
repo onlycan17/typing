@@ -6,6 +6,7 @@ import com.palmcms.api.user.UserService;
 import com.palmcms.api.domain.DTO.UserTokenDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,12 +34,16 @@ public class PalmTokenService implements TokenService {
     return null;
   }
 
-  private Timestamp getExpiredDate(int days)
+  @Value("${palmcms.tokenTimeoutMinute}")
+  private int tokenTimeoutMinute;
+
+
+  private Timestamp getExpiredDate(int minutes)
   {
     Timestamp ts = new Timestamp(System.currentTimeMillis());
     Calendar cal = Calendar.getInstance();
     cal.setTime(ts);
-    cal.add(Calendar.DAY_OF_MONTH, days);
+    cal.add(Calendar.MINUTE, minutes);
     ts.setTime(cal.getTime().getTime()); // or
     return ts;
   }
@@ -50,7 +55,7 @@ public class PalmTokenService implements TokenService {
     UserTokenDTO userTokenDTO = new UserTokenDTO();
     userTokenDTO.setUserId(userDTO.getId());
     userTokenDTO.setToken(token);
-    userTokenDTO.setExpiredDate(getExpiredDate(1));
+    userTokenDTO.setExpiredDate(getExpiredDate(tokenTimeoutMinute));
 
     userService.insertUserToken(userTokenDTO);
 
@@ -95,7 +100,7 @@ public class PalmTokenService implements TokenService {
     UserTokenDTO userTokenDTO = new UserTokenDTO();
     userTokenDTO.setUserId(palmToken.getUserDTO().getId());
     userTokenDTO.setToken(palmToken.getToken());
-    userTokenDTO.setExpiredDate(getExpiredDate(1));
+    userTokenDTO.setExpiredDate(getExpiredDate(tokenTimeoutMinute));
     userService.updateUserTokenExpiredDate(userTokenDTO);
 
     return true;
