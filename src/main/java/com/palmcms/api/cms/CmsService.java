@@ -1,5 +1,6 @@
 package com.palmcms.api.cms;
 
+import com.palmcms.api.domain.DTO.CmsApplicationDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,9 @@ public class CmsService {
         return cmsMapper.selectManagersByChurchId(churchId);
     }
 
+
+    public int insertCmsApp(CmsApplicationDTO cmsApp) {
+        return cmsMapper.insertCmsApp(cmsApp);
+    }
 
 }

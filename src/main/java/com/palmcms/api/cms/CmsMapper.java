@@ -1,5 +1,6 @@
 package com.palmcms.api.cms;
 
+import com.palmcms.api.domain.DTO.CmsApplicationDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,4 +13,5 @@ public interface CmsMapper {
 
     List<ManagerVO> selectManagersByChurchId(int churchId);
 
+    int insertCmsApp(CmsApplicationDTO cmsApp);
 }

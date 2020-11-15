@@ -19,9 +19,27 @@
 
     <select id="selectManagersByChurchId" resultType="com.palmcms.api.cms.ManagerVO">
         select U.userName, U.contactNo from TO_USER_MANAGE_CHURCH UMC
-        join TO_USER U on U.id = UMC.userId
-        join TO_USER_AUTHORITY UA on UA.authorityName = 'ROLE_CUSTOMER' and UA.userId = U.id
+                join TO_USER U on U.id = UMC.userId
+                join TO_USER_AUTHORITY UA on UA.authorityName = 'ROLE_CUSTOMER' and UA.userId = U.id
         where churchId = #{churcId}
     </select>
+
+    <insert id="insertCmsApp">
+        insert into CMS_APPLICATION
+        (
+            userId, userName, proviName, nickName, userContactNo, userSocialRegnNmber
+            , productName, productPrice, productServiceMonth
+            , holderName, selfYn, relation, bankCode, acctNo, holderContactNo, holderSocialReNnumber, cmsAppStatus
+            , creationDate, modificationDate
+        )
+        values
+        (
+            #{userId}, #{userName}, #{proviName}, #{nickName}, #{userContactNo}, #{userSocialRegnNmber}
+            , #{productName}, #{productPrice}, #{productServiceMonth}
+            , #{holderName}, #{selfYn}, #{relation}, #{bankCode}, #{acctNo}, #{holderContactNo}, #{holderSocialReNnumber}, 'NEW'
+            , sysdate(), sysdate()
+        )
+
+    </insert>
 
 </mapper>
