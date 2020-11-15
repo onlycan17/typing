@@ -24,9 +24,13 @@ public class UserDTO implements Serializable {
 
     private String nickName;
 
-    private String birthDay;
+    private UserStatusType userStatus;
 
-    private UserStatusType UserStatus;
+    private Integer churchId;
+
+    private String isCmsStop;
+
+    private String payerNo;
 
     @JsonIgnore
     private Timestamp creationDate;

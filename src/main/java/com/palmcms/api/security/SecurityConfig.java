@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui.html")
                 .antMatchers("/health")
                 .antMatchers("/auth/**")
+                .antMatchers("/code/**")
         ;
     }
 
@@ -66,11 +67,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 //                .antMatchers(Constants.PALMCMS_API_AUTH + "/**").permitAll()
 //                .antMatchers(Constants.PALMCMS_API_CODE + "/**").permitAll()
-                .antMatchers(Constants.PALMCMS_API_USERCMS + "/**").permitAll()
-                .antMatchers(Constants.PALMCMS_API_APP + "/**").permitAll()
-                .antMatchers(Constants.PALMCMS_API_BILL + "/**").permitAll()
-                .antMatchers(Constants.PALMCMS_API_PAY + "/**").permitAll()
-                .antMatchers(Constants.PALMCMS_API_FAQ + "/**").permitAll()
+                .antMatchers(Constants.PALMCMS_API_CMS + "/**").permitAll()
+                .antMatchers(Constants.PALMCMS_API_CUSOMER + "/**").permitAll()
+                .antMatchers(Constants.PALMCMS_API_USER + "/**").permitAll()
 
 
                 .and()
