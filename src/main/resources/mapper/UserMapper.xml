@@ -1,0 +1,55 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.palmcms.api.user.UserMapper">
+
+    <select id="selectUserById" resultType="com.palmcms.api.domain.DTO.UserDTO">
+        select *
+        from TO_USER
+        where id = #{id}
+    </select>
+
+
+    <select id="selectUserByUserLoginId" resultType="com.palmcms.api.domain.DTO.UserDTO">
+        select *
+        from TO_USER
+        where userLoginId = #{userLoginId}
+    </select>
+
+
+    <select id="selectUserRoles" resultType="com.palmcms.api.domain.DTO.UserRoleDTO">
+        select *
+        from TO_USER_AUTHORITY
+        where userId = #{userId}
+    </select>
+
+    <select id="selectUserRoleNames" resultType="String">
+        select authorityName
+        from TO_USER_AUTHORITY
+        where userId = #{userId}
+    </select>
+
+    <select id="selectUserToken" resultType="com.palmcms.api.domain.DTO.UserTokenDTO">
+        select *
+        from TO_USER_TOKEN
+        where token = #{token}
+        and expiredDate > current_timestamp
+    </select>
+
+    <insert id="insertUserToken">
+        insert into
+            TO_USER_TOKEN ( userId, token, expiredDate )
+        values ( #{userId}, #{token}, #{expiredDate} )
+    </insert>
+
+    <insert id="updateUserTokenExpiredDate">
+        update
+            TO_USER_TOKEN
+        set
+            expiredDate = #{expiredDate}
+        where token = #{userId}
+    </insert>
+
+
+</mapper>
