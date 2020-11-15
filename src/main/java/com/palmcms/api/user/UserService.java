@@ -1,0 +1,56 @@
+package com.palmcms.api.user;
+
+import com.palmcms.api.domain.DTO.UserDTO;
+import com.palmcms.api.domain.DTO.UserRoleDTO;
+import com.palmcms.api.domain.DTO.UserTokenDTO;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Slf4j
+@Service
+public class UserService {
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public Optional<UserDTO> selectUserById(int id) {
+        return userMapper.selectUserById(id);
+    }
+
+    public Optional<UserDTO> selectUserByUserLoginId(String loginId) {
+        return userMapper.selectUserByUserLoginId(loginId);
+    }
+
+    public boolean matchesPassword(String rawPassword, String encrypted) {
+        return passwordEncoder.matches(rawPassword, encrypted);
+    }
+
+    public List<UserRoleDTO> selectUserRoles(int userId) {
+        return userMapper.selectUserRoles(userId);
+    }
+
+    public List<String> selectUserRoleNames(int userId) {
+        return userMapper.selectUserRoleNames(userId);
+    }
+
+    public Optional<UserTokenDTO> selectUserToken(String token) {
+        return userMapper.selectUserToken(token);
+    }
+
+    public int insertUserToken(UserTokenDTO userTokenDTO) {
+        return userMapper.insertUserToken(userTokenDTO);
+    }
+
+    public int updateUserTokenExpiredDate(UserTokenDTO userTokenDTO) {
+        return userMapper.updateUserTokenExpiredDate(userTokenDTO);
+    }
+
+}
