@@ -15,6 +15,6 @@ public class CommonCodeDTO implements Serializable {
 
     private String codeName;
 
-    private Integer dispOrder;
+    private Integer orderNo;
 
 }

@@ -8,7 +8,7 @@
         select *
         from TO_COMMON_CODE
         where codeGroup = #{codeGroup}
-        order by dispOrder
+        order by orderNo
     </select>
 
 
