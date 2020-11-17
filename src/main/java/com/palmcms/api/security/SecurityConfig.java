@@ -22,6 +22,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
+import org.springframework.security.web.session.SessionManagementFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -33,6 +34,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private Environment environment;
+
+    @Bean
+    CorsFilter corsFilter() {
+        CorsFilter filter = new CorsFilter();
+        return filter;
+    }
 
     @Override
     public void configure(WebSecurity webSecurity) throws Exception {
@@ -47,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/webjars/**")
                 .antMatchers("/swagger-ui.html")
                 .antMatchers("/health")
-                .antMatchers("/auth/**")
+                .antMatchers("/palmcms/auth/**")
                 .antMatchers("/code/**")
         ;
     }
@@ -55,6 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+
                 .csrf()
                 .disable()
 
@@ -83,6 +91,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(tokenAuthentificationFilter(),
                         AbstractPreAuthenticatedProcessingFilter.class)
+                .addFilterBefore(corsFilter(), SessionManagementFilter.class) //adds your custom CorsFilter
+
         ;
     }
 
@@ -105,7 +115,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public TokenAuthenticationFilter tokenAuthentificationFilter() {
-        return new TokenAuthenticationFilter("/palmcms/api/**");
+        return new TokenAuthenticationFilter("/palmcms/api/v1/**");
     }
 
     @Bean

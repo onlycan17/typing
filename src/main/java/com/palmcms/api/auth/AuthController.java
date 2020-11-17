@@ -30,7 +30,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 //@RequestMapping(value = {Constants.PALMCMS_API_AUTH})
-@RequestMapping(value = {"/auth"})
+@RequestMapping(value = {"/palmcms/auth"})
 public class AuthController {
 
     @Autowired
