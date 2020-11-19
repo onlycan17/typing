@@ -27,7 +27,6 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@PreAuthorize("hasAnyAuthority( T(com.palmcms.api.security.AuthoritiesConstants).USER)")
 @RequestMapping(value = {Constants.PALMCMS_API_CMS})
 public class CmsController {
 
@@ -38,7 +37,7 @@ public class CmsController {
     MessageService messageService;
 
 
-    @GetMapping(value = {"/"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = {"/info"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value="CMS 정보조회", notes="CMS 정보조회")
     public UserCmsInfoResultVO userCms() {
 

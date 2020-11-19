@@ -7,13 +7,13 @@
     <select id="selectUserCmssInfoByUserId" resultType="com.palmcms.api.cms.UserCmsInfoVO">
         select U.userLoginId, U.userName, U.proviName, U.nickName, U.contactNo
                 , U.socialRegNumber, CH.churchName
-                , U.userStatus, C1.codeVal userStatusName
+                , U.userStatus, C1.codeName userStatusName
                 , B.unpaidAmt
         from TO_USER U
                  join TO_CHURCH CH on U.churchId = CH.id
                  left outer join ( select userId, max(cmsbIllDay) cmsbIllDay from CMS_BILL where userId = #{userId}) BM on BM.userId = U.id
                  left outer join CMS_BILL B on B.userId = BM.userId and B.cmsBillDay = BM.cmsbIllDay
-                 left outer join TO_COMMON_CODE C1 on C1.codeGroup = 'userStatus' and C1.codeKey  = U.userStatus
+                 left outer join TO_COMMON_CODE C1 on C1.codeGroup = 'userStatus' and C1.code  = U.userStatus
         where U.id = #{userId}
     </select>
 
@@ -21,7 +21,7 @@
         select U.userName, U.contactNo from TO_USER_MANAGE_CHURCH UMC
                 join TO_USER U on U.id = UMC.userId
                 join TO_USER_AUTHORITY UA on UA.authorityName = 'ROLE_CUSTOMER' and UA.userId = U.id
-        where churchId = #{churcId}
+        where UMC.churchId = #{churcId}
     </select>
 
     <insert id="insertCmsApp">
