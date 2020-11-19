@@ -18,7 +18,7 @@
     </select>
 
     <select id="selectManagersByChurchId" resultType="com.palmcms.api.cms.ManagerVO">
-        select U.userName, U.contactNo from TO_USER_MANAGE_CHURCH UMC
+        select U.userName managerName, U.contactNo managerContactNo from TO_USER_MANAGE_CHURCH UMC
                 join TO_USER U on U.id = UMC.userId
                 join TO_USER_AUTHORITY UA on UA.authorityName = 'ROLE_CUSTOMER' and UA.userId = U.id
         where UMC.churchId = #{churcId}
