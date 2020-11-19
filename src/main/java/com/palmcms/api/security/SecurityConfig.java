@@ -22,7 +22,11 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
-import org.springframework.security.web.session.SessionManagementFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -34,12 +38,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private Environment environment;
-
-    @Bean
-    CorsFilter corsFilter() {
-        CorsFilter filter = new CorsFilter();
-        return filter;
-    }
 
     @Override
     public void configure(WebSecurity webSecurity) throws Exception {
@@ -73,11 +71,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .disable()
 
                 .authorizeRequests()
-//                .antMatchers(Constants.PALMCMS_API_AUTH + "/**").permitAll()
-//                .antMatchers(Constants.PALMCMS_API_CODE + "/**").permitAll()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers(Constants.PALMCMS_API_CMS + "/**").permitAll()
                 .antMatchers(Constants.PALMCMS_API_CUSOMER + "/**").permitAll()
                 .antMatchers(Constants.PALMCMS_API_USER + "/**").permitAll()
+                .anyRequest().authenticated()
+
+
+                .and()
+                .cors()
+
 
 
                 .and()
@@ -91,11 +94,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(tokenAuthentificationFilter(),
                         AbstractPreAuthenticatedProcessingFilter.class)
-                .addFilterBefore(corsFilter(), SessionManagementFilter.class) //adds your custom CorsFilter
 
         ;
     }
-
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
