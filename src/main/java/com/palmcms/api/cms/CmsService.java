@@ -23,6 +23,10 @@ public class CmsService {
         return cmsMapper.selectManagersByChurchId(churchId);
     }
 
+    public List<CmsApplicationDTO> selectApplicationsByUserId(int userId) {
+        return cmsMapper.selectApplicationsByUserId(userId);
+    }
+
 
     public int insertCmsApp(CmsApplicationDTO cmsApp) {
         return cmsMapper.insertCmsApp(cmsApp);

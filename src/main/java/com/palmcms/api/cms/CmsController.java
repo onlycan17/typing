@@ -46,9 +46,13 @@ public class CmsController {
         Optional<UserCmsInfoVO> oUserCmsInfoVO = cmsService.selectUserCmssInfoByUserId(userDTO.getId());
         List<ManagerVO> managers = cmsService.selectManagersByChurchId(userDTO.getChurchId());
 
+        List<CmsApplicationDTO> applications = cmsService.selectApplicationsByUserId(userDTO.getId());
+
+
         UserCmsInfoResultVO userCmsInfoResultVO = new UserCmsInfoResultVO();
         userCmsInfoResultVO.setUserCmsInfo(oUserCmsInfoVO.get());
         userCmsInfoResultVO.setManagers(managers);
+        userCmsInfoResultVO.setApplication(applications);
         return userCmsInfoResultVO;
     }
 
@@ -85,7 +89,7 @@ class UserCmsInfoResultVO extends ResultVO
 
     List<ManagerVO> managers;
 
-    List<CmsApplicationVO> application;
+    List<CmsApplicationDTO> application;
 
 }
 

@@ -13,5 +13,7 @@ public interface CmsMapper {
 
     List<ManagerVO> selectManagersByChurchId(int churchId);
 
+    List<CmsApplicationDTO> selectApplicationsByUserId(int userId);
+
     int insertCmsApp(CmsApplicationDTO cmsApp);
 }

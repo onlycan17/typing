@@ -37,10 +37,8 @@ public class CmsApplicationDTO implements Serializable {
     @NotEmpty
     private String productName;
 
-    @NotEmpty
     private Integer productPrice;
 
-    @NotEmpty
     private Integer productServiceMonth;
 
     @NotEmpty
