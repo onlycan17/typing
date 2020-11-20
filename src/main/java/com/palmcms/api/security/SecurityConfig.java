@@ -42,14 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity webSecurity) throws Exception {
         webSecurity.ignoring()
                 .antMatchers(HttpMethod.OPTIONS, "*")
-                .antMatchers("/static/bootstrap/**")
-                .antMatchers("/static/css/**")
-                .antMatchers("/static/images/**")
-                .antMatchers("/images/**")
-                .antMatchers("/static/js/**")
-                .antMatchers("/static/**")
-                .antMatchers("/webjars/**")
+                .antMatchers("/swagger-resources/**")
                 .antMatchers("/swagger-ui.html")
+                .antMatchers("/v2/api-docs")
                 .antMatchers("/health")
                 .antMatchers("/palmcms/auth/**")
                 .antMatchers("/code/**")
@@ -96,6 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         ;
     }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
