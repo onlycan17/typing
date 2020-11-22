@@ -41,10 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity webSecurity) throws Exception {
         webSecurity.ignoring()
-                .antMatchers(HttpMethod.OPTIONS, "*")
-                .antMatchers("/swagger-resources/**")
-                .antMatchers("/swagger-ui.html")
-                .antMatchers("/v2/api-docs")
+            .antMatchers(HttpMethod.OPTIONS, "*")
+            .antMatchers("/swagger-resources/**")
+            .antMatchers("/swagger-ui.html")
+            .antMatchers("/v2/api-docs")
+            .antMatchers("/webjars/**")
                 .antMatchers("/health")
                 .antMatchers("/palmcms/auth/**")
                 .antMatchers("/code/**")
