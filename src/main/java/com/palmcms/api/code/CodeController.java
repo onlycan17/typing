@@ -1,14 +1,13 @@
 package com.palmcms.api.code;
 
 import com.palmcms.api.common.Constants;
-import com.palmcms.api.domain.DTO.CommonCodeDTO;
+import com.palmcms.api.domain.VO.CommonCodeDTO;
 import com.palmcms.api.domain.VO.ResultVO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +24,11 @@ public class CodeController {
   CodeService codeService;
 
   @ResponseBody
-  @GetMapping(value = {"/{codeGroup}"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
+  @GetMapping(value = {"/{category}"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
   public CommonCodeResultVO code(
-          @PathVariable String codeGroup
+          @PathVariable String category
   ) {
-    List<CommonCodeDTO> codes = codeService.selectCodesByCodeGroup(codeGroup);
+    List<CommonCodeDTO> codes = codeService.selectCodesByCategory(category);
     return new CommonCodeResultVO(codes);
   }
 

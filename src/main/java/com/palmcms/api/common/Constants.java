@@ -3,7 +3,6 @@ package com.palmcms.api.common;
 public class Constants {
     public static final String PALMCMS_API = "/palmcms/api/v1";
 
-    public static final String PALMCMS_API_AUTH = "/auth";
     public static final String PALMCMS_API_CODE = "/code";
 
     public static final String PALMCMS_API_CMS = PALMCMS_API + "/cms";

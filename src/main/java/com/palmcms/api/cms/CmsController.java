@@ -7,6 +7,7 @@ import com.palmcms.api.domain.VO.ResultVO;
 import com.palmcms.api.domain.enums.UserStatusType;
 import com.palmcms.api.messages.MessageService;
 import com.palmcms.api.messages.Messages;
+import com.palmcms.api.security.AuthoritiesConstants;
 import com.palmcms.api.security.PalmToken;
 import com.palmcms.api.security.SecurityUtils;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping(value = {Constants.PALMCMS_API_CMS})
+@Secured({AuthoritiesConstants.MANAGER})
 public class CmsController {
 
     @Autowired

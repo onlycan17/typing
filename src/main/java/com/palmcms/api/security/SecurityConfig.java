@@ -42,13 +42,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity webSecurity) throws Exception {
         webSecurity.ignoring()
             .antMatchers(HttpMethod.OPTIONS, "*")
+            .antMatchers("/error")
             .antMatchers("/swagger-resources/**")
             .antMatchers("/swagger-ui.html")
             .antMatchers("/v2/api-docs")
             .antMatchers("/webjars/**")
-                .antMatchers("/health")
-                .antMatchers("/palmcms/auth/**")
-                .antMatchers("/code/**")
+            .antMatchers("/health")
+            .antMatchers("/palmcms/auth/**")
+            .antMatchers("/code/**")
         ;
     }
 

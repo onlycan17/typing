@@ -4,11 +4,14 @@
 
 <mapper namespace="com.palmcms.api.code.CodeMapper">
 
-    <select id="selectCodesByCodeGroup" resultType="com.palmcms.api.domain.DTO.CommonCodeDTO">
-        select *
-        from TO_COMMON_CODE
-        where codeGroup = #{codeGroup}
-        order by orderNo
+    <select id="selectCodesByCategory" resultType="com.palmcms.api.domain.VO.CommonCodeDTO">
+        select C.codeValue, L.codeName
+        from COMMON_CODE C
+        join COMMON_CODE_LOCALE L on C.code = L.codeId
+        where category = #{category}
+        and parentCode is null
+        and localeCode = 'kor'
+        order by orderSeq
     </select>
 
 

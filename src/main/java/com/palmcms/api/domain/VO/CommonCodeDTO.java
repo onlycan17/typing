@@ -1,4 +1,4 @@
-package com.palmcms.api.domain.DTO;
+package com.palmcms.api.domain.VO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,12 +9,8 @@ import java.io.Serializable;
 @Setter
 public class CommonCodeDTO implements Serializable {
 
-    private String codeGroup;
-
-    private String code;
+    private String codeValue;
 
     private String codeName;
-
-    private Integer orderNo;
 
 }
