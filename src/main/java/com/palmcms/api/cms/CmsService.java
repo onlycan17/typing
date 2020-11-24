@@ -15,8 +15,12 @@ public class CmsService {
     @Autowired
     private CmsMapper cmsMapper;
 
-    public Optional<UserInformationVO> selectUserCmssInfoByUserId(int userId) {
+    public Optional<UserVO> selectUserCmssInfoByUserId(int userId) {
         return cmsMapper.selectUserCmssInfoByUserId(userId);
+    }
+
+    public Optional<CmsUserVO> selectCmsInfoByPayerNo(String payerNo) {
+        return cmsMapper.selectCmsInfoByPayerNo(payerNo);
     }
 
     public List<ManagerVO> selectManagersByChurchId(int churchId) {

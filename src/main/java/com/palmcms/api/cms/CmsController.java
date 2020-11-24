@@ -46,17 +46,21 @@ public class CmsController {
         UserDTO userDTO = palmToken.getUserDTO();
 
 
-        Optional<UserInformationVO> oUserInformationVO = cmsService.selectUserCmssInfoByUserId(userDTO.getId());
-
+        // 사용자정보 with 미납금
+        Optional<UserVO> oUserVO = cmsService.selectUserCmssInfoByUserId(userDTO.getId());
+        // CMS정보
+        Optional<CmsUserVO> oCmsUserVO = cmsService.selectCmsInfoByPayerNo(userDTO.getPayerNo());
         // 담당 매니저 목록
         List<ManagerVO> managers = cmsService.selectManagersByChurchId(userDTO.getChurchId());
-
-
+        // 신청서 목록
         List<CmsApplicationDTO> applications = cmsService.selectApplicationsByUserId(userDTO.getId());
 
-
         UserCmsInfoResultVO userCmsInfoResultVO = new UserCmsInfoResultVO();
-        userCmsInfoResultVO.setUserCmsInfo(oUserInformationVO.get());
+        userCmsInfoResultVO.setUser(oUserVO.get());
+        if (oCmsUserVO.isPresent())
+        {
+            userCmsInfoResultVO.setCmsUser(oCmsUserVO.get());
+        }
         userCmsInfoResultVO.setManagers(managers);
         userCmsInfoResultVO.setApplication(applications);
 
@@ -92,7 +96,9 @@ public class CmsController {
 @Setter
 class UserCmsInfoResultVO extends ResultVO
 {
-    UserInformationVO userCmsInfo ;
+    UserVO user ;
+
+    CmsUserVO cmsUser ;
 
     List<ManagerVO> managers;
 
@@ -102,7 +108,7 @@ class UserCmsInfoResultVO extends ResultVO
 
 @Getter
 @Setter
-class UserInformationVO
+class UserVO
 {
     private String userLoginId;
 
@@ -123,6 +129,22 @@ class UserInformationVO
     private UserStatusType UserStatusName;
 
     private int unpaidAmt;
+}
+
+@Getter
+@Setter
+class CmsUserVO
+{
+    private String payerNo;
+
+    private String payerName;
+
+    private String contactNo;
+
+    private String socialRegNumber;
+
+    private String status;
+
 }
 
 @Getter

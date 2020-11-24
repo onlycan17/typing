@@ -4,7 +4,7 @@
 
 <mapper namespace="com.palmcms.api.cms.CmsMapper">
 
-    <select id="selectUserCmssInfoByUserId" resultType="com.palmcms.api.cms.UserInformationVO">
+    <select id="selectUserCmssInfoByUserId" resultType="com.palmcms.api.cms.UserVO">
         select U.userLoginId, U.userName, U.proviName, U.nickName, U.contactNo
                 , U.socialRegNumber, CH.churchName
                 , U.userStatus, C1.codeName userStatusName
@@ -15,6 +15,13 @@
                  left outer join CMS_BILL B on B.userId = BM.userId and B.cmsBillDay = BM.cmsbIllDay
                  left outer join TO_COMMON_CODE C1 on C1.codeGroup = 'userStatus' and C1.code  = U.userStatus
         where U.id = #{userId}
+    </select>
+
+    <select id="selectCmsInfoByPayerNo" resultType="com.palmcms.api.cms.CmsUserVO">
+        select CU.payerNo, CU.payerName, CU.payerNo, CU.contactNo, CU.status
+          , case when socialRegNumber is null then birthday else socialRegNumber end socialRegNumber
+        from CMS_USER CU
+        where CU.payerNO = #{payerNO}
     </select>
 
     <select id="selectManagersByChurchId" resultType="com.palmcms.api.cms.ManagerVO">
