@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins="*")
@@ -71,7 +72,9 @@ public class AuthController {
         PalmToken palmToken = tokenService.saveToken(userDTO);
         SecurityUtils.GrantContext(palmToken);
 
-        LoginResultVO loginResultVO = new LoginResultVO(palmToken.getToken());
+        LoginResultVO loginResultVO = new LoginResultVO();
+        loginResultVO.setToken(palmToken.getToken());
+        loginResultVO.setRoles(userService.selectUserRoleNames(userDTO.getId()));
         return loginResultVO;
     }
 
@@ -109,7 +112,11 @@ class LoginDTO implements Serializable {
 @Getter
 @Setter
 class LoginResultVO extends ResultVO {
+
     private String token;
+
+    List<String> roles;
+
     public LoginResultVO(String resultCode, String message) {
         super(resultCode, message);
     }
@@ -117,10 +124,9 @@ class LoginResultVO extends ResultVO {
     {
         super(message, bindingResult);
     }
-
-    public LoginResultVO(String token)
+    public LoginResultVO()
     {
-        this.token = token;
+        super();
     }
 }
 
