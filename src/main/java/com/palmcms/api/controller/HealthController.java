@@ -1,4 +1,4 @@
-package com.palmcms.api.home;
+package com.palmcms.api.controller;
 
 import com.palmcms.api.common.Constants;
 import lombok.extern.slf4j.Slf4j;

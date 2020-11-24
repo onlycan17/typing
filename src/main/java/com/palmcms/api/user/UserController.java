@@ -21,7 +21,8 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping(value = {Constants.PALMCMS_API_USER})
+@RequestMapping({Constants.API.API_PREFIX + Constants.API.API_USER,
+        Constants.API.API_LANGUAGE_PREFIX + Constants.API.API_USER})
 public class UserController {
 
     @Autowired

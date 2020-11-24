@@ -31,8 +31,8 @@ import java.util.Optional;
 @CrossOrigin(origins="*")
 @Slf4j
 @RestController
-//@RequestMapping(value = {Constants.PALMCMS_API_AUTH})
-@RequestMapping(value = {"/palmcms/auth"})
+@RequestMapping({Constants.API.API_NOAUTH_PREFIX + Constants.API.API_AUTH,
+        Constants.API.API_LANGUAGE_NOAUTH_PREFIX + Constants.API.API_AUTH})
 public class AuthController {
 
     @Autowired

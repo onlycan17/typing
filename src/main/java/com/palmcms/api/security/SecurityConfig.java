@@ -48,8 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/v2/api-docs")
             .antMatchers("/webjars/**")
             .antMatchers("/health")
-            .antMatchers("/palmcms/auth/**")
-            .antMatchers("/code/**")
         ;
     }
 
@@ -60,23 +58,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
 
-//                .formLogin()
-//                .disable()
-//
-//                .httpBasic()
-//                .disable()
-
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .antMatchers(Constants.PALMCMS_API_CMS + "/**").permitAll()
-                .antMatchers(Constants.PALMCMS_API_CUSOMER + "/**").permitAll()
-                .antMatchers(Constants.PALMCMS_API_USER + "/**").permitAll()
-                .anyRequest().authenticated()
 
+                .antMatchers(Constants.API.API_NOAUTH_PREFIX + Constants.API.API_CODE + "/**").permitAll()
+                .antMatchers(Constants.API.API_NOAUTH_PREFIX + "/kor" + Constants.API.API_CODE + "/**").permitAll()
+                .antMatchers(Constants.API.API_NOAUTH_PREFIX + "/eng" + Constants.API.API_CODE + "/**").permitAll()
+                .antMatchers(Constants.API.API_NOAUTH_PREFIX + "/zho" + Constants.API.API_CODE + "/**").permitAll()
+                .antMatchers(Constants.API.API_NOAUTH_PREFIX + "/jpn" + Constants.API.API_CODE + "/**").permitAll()
+
+                .antMatchers(Constants.API.API_NOAUTH_PREFIX + Constants.API.API_AUTH + "/**").permitAll()
+                .antMatchers(Constants.API.API_NOAUTH_PREFIX + "/kor" + Constants.API.API_AUTH + "/**").permitAll()
+                .antMatchers(Constants.API.API_NOAUTH_PREFIX + "/eng" + Constants.API.API_AUTH + "/**").permitAll()
+                .antMatchers(Constants.API.API_NOAUTH_PREFIX + "/zho" + Constants.API.API_AUTH + "/**").permitAll()
+                .antMatchers(Constants.API.API_NOAUTH_PREFIX + "/jpn" + Constants.API.API_AUTH + "/**").permitAll()
+
+                .anyRequest().authenticated()
 
                 .and()
                 .cors()
-
 
 
                 .and()
@@ -90,7 +90,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(tokenAuthentificationFilter(),
                         AbstractPreAuthenticatedProcessingFilter.class)
-
         ;
     }
 
@@ -125,7 +124,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public TokenAuthenticationFilter tokenAuthentificationFilter() {
-        return new TokenAuthenticationFilter("/palmcms/api/v1/**");
+        return new TokenAuthenticationFilter(Constants.API.API_PREFIX + "/**");
     }
 
     @Bean

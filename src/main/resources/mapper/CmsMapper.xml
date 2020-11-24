@@ -4,7 +4,7 @@
 
 <mapper namespace="com.palmcms.api.cms.CmsMapper">
 
-    <select id="selectUserCmssInfoByUserId" resultType="com.palmcms.api.cms.UserCmsInfoVO">
+    <select id="selectUserCmssInfoByUserId" resultType="com.palmcms.api.cms.UserInformationVO">
         select U.userLoginId, U.userName, U.proviName, U.nickName, U.contactNo
                 , U.socialRegNumber, CH.churchName
                 , U.userStatus, C1.codeName userStatusName

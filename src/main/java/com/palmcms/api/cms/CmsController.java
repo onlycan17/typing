@@ -25,8 +25,8 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping(value = {Constants.PALMCMS_API_CMS})
-@Secured({AuthoritiesConstants.MANAGER})
+@RequestMapping({Constants.API.API_PREFIX + Constants.API.API_CMS,
+        Constants.API.API_LANGUAGE_PREFIX + Constants.API.API_CMS})
 public class CmsController {
 
     @Autowired
@@ -46,16 +46,20 @@ public class CmsController {
         UserDTO userDTO = palmToken.getUserDTO();
 
 
-        Optional<UserCmsInfoVO> oUserCmsInfoVO = cmsService.selectUserCmssInfoByUserId(userDTO.getId());
+        Optional<UserInformationVO> oUserInformationVO = cmsService.selectUserCmssInfoByUserId(userDTO.getId());
+
+        // 담당 매니저 목록
         List<ManagerVO> managers = cmsService.selectManagersByChurchId(userDTO.getChurchId());
+
 
         List<CmsApplicationDTO> applications = cmsService.selectApplicationsByUserId(userDTO.getId());
 
 
         UserCmsInfoResultVO userCmsInfoResultVO = new UserCmsInfoResultVO();
-        userCmsInfoResultVO.setUserCmsInfo(oUserCmsInfoVO.get());
+        userCmsInfoResultVO.setUserCmsInfo(oUserInformationVO.get());
         userCmsInfoResultVO.setManagers(managers);
         userCmsInfoResultVO.setApplication(applications);
+
         return userCmsInfoResultVO;
     }
 
@@ -88,7 +92,7 @@ public class CmsController {
 @Setter
 class UserCmsInfoResultVO extends ResultVO
 {
-    UserCmsInfoVO userCmsInfo ;
+    UserInformationVO userCmsInfo ;
 
     List<ManagerVO> managers;
 
@@ -98,7 +102,7 @@ class UserCmsInfoResultVO extends ResultVO
 
 @Getter
 @Setter
-class UserCmsInfoVO
+class UserInformationVO
 {
     private String userLoginId;
 
@@ -134,17 +138,45 @@ class ManagerVO
 
 @Getter
 @Setter
-class CmsApplicationVO
+class UserCmsVO
 {
-    private String appStatus;
+    private String cmsStatus;
 
-    private String appStatusName;
+    private String userName;
 
-    private String payerNo;
+    private String proviName;
 
-    private String payerName;
+    private String nickName;
 
-    private String payerContactNo;
+    private String contactNo;
 
-    private String payerSocialRegNumber;
+    private String socialRegNumber;
+
+    private  String churchName;
+
+    private UserStatusType UserStatus;
+
+    private UserStatusType UserStatusName;
+
+    private int unpaidAmt;
 }
+
+
+//
+//
+//@Getter
+//@Setter
+//class CmsApplicationVO
+//{
+//    private String appStatus;
+//
+//    private String appStatusName;
+//
+//    private String payerNo;
+//
+//    private String payerName;
+//
+//    private String payerContactNo;
+//
+//    private String payerSocialRegNumber;
+//}

@@ -15,7 +15,7 @@ public class CmsService {
     @Autowired
     private CmsMapper cmsMapper;
 
-    public Optional<UserCmsInfoVO> selectUserCmssInfoByUserId(int userId) {
+    public Optional<UserInformationVO> selectUserCmssInfoByUserId(int userId) {
         return cmsMapper.selectUserCmssInfoByUserId(userId);
     }
 

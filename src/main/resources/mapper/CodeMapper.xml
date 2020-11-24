@@ -8,10 +8,10 @@
         select C.codeValue, L.codeName
         from COMMON_CODE C
         join COMMON_CODE_LOCALE L on C.code = L.codeId
-        where category = #{category}
-        and parentCode is null
-        and localeCode = 'kor'
-        order by orderSeq
+        where C.category = #{category}
+          and C.parentCode is null
+          and L.localeCode = #{localeCode}
+        order by C.orderSeq
     </select>
 
 

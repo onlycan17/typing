@@ -1,16 +1,42 @@
 package com.palmcms.api.common;
 
 public class Constants {
-    public static final String PALMCMS_API = "/palmcms/api/v1";
-
-    public static final String PALMCMS_API_CODE = "/code";
-
-    public static final String PALMCMS_API_CMS = PALMCMS_API + "/cms";
-    public static final String PALMCMS_API_CUSOMER = PALMCMS_API + "/customer";
-    public static final String PALMCMS_API_USER = PALMCMS_API + "/user";
 
 
     public static final String APPLICATION_JSON_UTF8_VALUE = "application/json;charset=UTF-8";
 
+    private Constants() {
+    }
 
+    public class Profile {
+
+        private Profile() {
+        }
+
+        public static final String DEVELOPMENT = "dev";
+        public static final String PRODUCTION = "prod";
+
+    }
+
+    public class API {
+
+        private API() {
+        }
+        public static final String API_LANGUAGE = "/{language:[kor|eng|jpn|zho]+}";
+
+        public static final String API_NOAUTH_PREFIX = "/palmcms/api/v1";
+        public static final String API_LANGUAGE_NOAUTH_PREFIX = API_NOAUTH_PREFIX + API_LANGUAGE;
+
+        public static final String API_AUTH = "/auth";
+        public static final String API_CODE = "/code";
+
+        public static final String API_PREFIX = "/palmcms/api/v1/app";
+        public static final String API_LANGUAGE_PREFIX = API_PREFIX + API_LANGUAGE;
+
+
+        public static final String API_CMS = "/cms";
+        public static final String API_CUSOMER = "/customer";
+        public static final String API_USER = "/user";
+
+    }
 }

@@ -9,7 +9,7 @@ import java.util.Optional;
 @Component
 public interface CmsMapper {
 
-    Optional<UserCmsInfoVO> selectUserCmssInfoByUserId(int userId);
+    Optional<UserInformationVO> selectUserCmssInfoByUserId(int userId);
 
     List<ManagerVO> selectManagersByChurchId(int churchId);
 
