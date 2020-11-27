@@ -34,6 +34,8 @@ public class CmsApplicationDTO implements Serializable {
     @NotEmpty
     private String userSocialRegNumber;
 
+    private String userSign;
+
     @NotEmpty
     private String productName;
 
@@ -62,6 +64,8 @@ public class CmsApplicationDTO implements Serializable {
 
     @NotEmpty
     private String holderSocialRegNumber;
+
+    private String holderSign;
 
     private String cmsAppStatus;
 

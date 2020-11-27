@@ -24,7 +24,7 @@ public class Constants {
         }
         public static final String API_LANGUAGE = "/{language:[kor|eng|jpn|zho]+}";
 
-        public static final String API_NOAUTH_PREFIX = "/";
+        public static final String API_NOAUTH_PREFIX = "/palmcms/api/v1";
         public static final String API_LANGUAGE_NOAUTH_PREFIX = API_NOAUTH_PREFIX + API_LANGUAGE;
 
         public static final String API_AUTH = "/auth";
