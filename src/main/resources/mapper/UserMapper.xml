@@ -48,7 +48,7 @@
             TO_USER_TOKEN
         set
             expiredDate = #{expiredDate}
-        where token = #{userId}
+        where token = #{token}
     </insert>
 
 

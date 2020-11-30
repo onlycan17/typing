@@ -65,6 +65,8 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 //      return null;
 //    }
 
+    tokenService.renewalToken(userAuthenticationToken);
+
     return getAuthenticationManager().authenticate(userAuthenticationToken);
   }
 

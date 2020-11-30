@@ -17,7 +17,7 @@ public class CmsApplicationDTO implements Serializable {
 
     private Integer userId;
 
-    private Integer userLoginId;
+    private String userLoginId;
 
     @NotEmpty
     private String userName;
