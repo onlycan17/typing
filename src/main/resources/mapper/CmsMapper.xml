@@ -50,8 +50,8 @@
         (
             #{userId}, #{userName}, #{proviName}, #{nickName}, #{userContactNo}, #{userSocialRegNumber}, #{userSign}
             , #{productName}, #{productPrice}, #{productServiceMonth}
-            , #{holderName}, #{selfYN}, #{relation}, #{bankCode}, #{acctNo}, #{holderContactNo}, #{holderSign}
-            , #{holderSocialRegNumber}, 'NEW'
+            , #{holderName}, #{selfYN}, #{relation}, #{bankCode}, #{acctNo}, #{holderContactNo}, #{holderSocialRegNumber}
+            , #{holderSign}, 'NEW'
             , sysdate(), sysdate()
         )
 
