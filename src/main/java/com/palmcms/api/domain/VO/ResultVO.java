@@ -11,20 +11,21 @@ import org.springframework.validation.BindingResult;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ResultVO {
-
-  private Integer status = 200;
-  private String message = "";
-  private String error = "";
-
-  private String resultCode = "ok";
+public class ResultVO<T> {
 
   public static final String OK = "ok";
   public static final String FAIL = "fail";
 
+  private Integer status = 200;
+  private String message = "";
+  private String error = "";
+  private T data = null;
+
+  private String resultCode = ResultVO.OK;
+
   @JsonIgnore
   public boolean isOk() {
-    return "ok".equals(resultCode);
+    return ResultVO.OK.equals(resultCode);
   }
 
   public ResultVO(String resultCode, String message) {
@@ -40,14 +41,14 @@ public class ResultVO {
 
   public ResultVO(String message, BindingResult bindingResult)
   {
-    this.resultCode = "fail";
+    this.resultCode = ResultVO.FAIL;
     this.message = message;
     this.error = bindingResult.getAllErrors().toString();
   }
 
   public ResultVO(String message, Exception ex)
   {
-    this.resultCode = "fail";
+    this.resultCode = ResultVO.FAIL;
     this.message = message;
     this.error = ex.toString();
   }
