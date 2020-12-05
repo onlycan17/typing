@@ -42,4 +42,8 @@ public class UserDTO implements Serializable {
     @JsonIgnore
     private Timestamp modificationDate;
 
+    private String parishName;
+
+    private String churchName;
+
 }

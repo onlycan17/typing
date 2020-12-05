@@ -57,4 +57,20 @@
 
     </insert>
 
+    <select id="getAppList" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
+        select A.*, U.userLoginId
+        from CMS_APPLICATION A
+        join TO_USER U on A.userId = U.id
+        where A.userId = #{userId}
+        order by A.id desc
+    </select>
+
+    <select id="getAppOne" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
+        select A.*, U.userLoginId
+        from CMS_APPLICATION A
+        join TO_USER U on A.userId = U.id
+        where A.userId = #{userId}
+        and A.id = #{appId}
+    </select>
+
 </mapper>

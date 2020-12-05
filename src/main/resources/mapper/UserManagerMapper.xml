@@ -1,0 +1,29 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.palmcms.api.user.UserManagerMapper">
+
+    <select id="getUserList" resultType="com.palmcms.api.domain.DTO.UserDTO">
+        select U.*
+        , CH.parishName
+        , CH.churchName
+        from TO_USER U
+        join TO_CHURCH CH on CH.id = U.churchId
+        join TO_USER UM on UM.churchId = U.churchId
+        where UM.id = #{userId}
+        and U.userStatus in ( 'NEW', 'CONFIRMED', 'REJECT' )
+        <if test='keywordType == "userLoginId"'>
+            <if test='keywordText != null and keywordText != ""'>
+                and U.userLoginId like CONCAT('%',#{keywordText},'%')
+            </if>
+        </if>
+        <if test='keywordType == "userName"'>
+            <if test='keywordText != null and keywordText != ""'>
+                and U.userName like CONCAT('%',#{keywordText},'%')
+            </if>
+        </if>
+        order by U.id desc
+    </select>
+
+</mapper>

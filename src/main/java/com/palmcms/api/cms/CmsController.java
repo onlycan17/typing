@@ -3,6 +3,7 @@ package com.palmcms.api.cms;
 import com.palmcms.api.common.Constants;
 import com.palmcms.api.domain.DTO.CmsApplicationDTO;
 import com.palmcms.api.domain.DTO.UserDTO;
+import com.palmcms.api.domain.VO.PageInfoResultVO;
 import com.palmcms.api.domain.VO.ResultVO;
 import com.palmcms.api.domain.enums.UserStatusType;
 import com.palmcms.api.messages.MessageService;
@@ -90,6 +91,29 @@ public class CmsController {
         return new ResultVO();
     }
 
+    @GetMapping(value = {"/app"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value="CMS 신청이력 조회", notes="CMS 신청이력 조회")
+    public ResultVO<List<CmsApplicationDTO>> list() {
+
+        UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
+
+        return new ResultVO<>(cmsService.getAppList(userDTO.getId()));
+    }
+
+    @GetMapping(value = {"/app/{appId}"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value="CMS 신청이력 상세 조회", notes="CMS 신청이력 상세 조회")
+    public ResultVO<CmsApplicationDTO> one(@PathVariable Integer appId) {
+
+        UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
+
+        Optional<CmsApplicationDTO> oCmsApplicationDTO = cmsService.getAppOne(userDTO.getId(), appId);
+        if ( oCmsApplicationDTO.isEmpty())
+        {
+            return new ResultVO<>(ResultVO.FAIL, "NOF FOUND");
+        }
+
+        return new ResultVO<>(oCmsApplicationDTO.get());
+    }
 }
 
 @Getter

@@ -1,6 +1,8 @@
 package com.palmcms.api.cms;
 
+import com.github.pagehelper.Page;
 import com.palmcms.api.domain.DTO.CmsApplicationDTO;
+import com.palmcms.api.domain.VO.SearchVO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,4 +20,10 @@ public interface CmsMapper {
     List<CmsApplicationDTO> selectApplicationsByUserId(int userId);
 
     int insertCmsApp(CmsApplicationDTO cmsApp);
+
+    Page<CmsApplicationDTO> getAppList(Integer userId, SearchVO search, int pageNum, int pageSize);
+
+    List<CmsApplicationDTO> getAppList(Integer userId);
+
+    Optional<CmsApplicationDTO> getAppOne(Integer userId, Integer appId);
 }

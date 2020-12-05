@@ -1,6 +1,8 @@
 package com.palmcms.api.cms;
 
+import com.github.pagehelper.Page;
 import com.palmcms.api.domain.DTO.CmsApplicationDTO;
+import com.palmcms.api.domain.VO.SearchVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,18 @@ public class CmsService {
 
     public int insertCmsApp(CmsApplicationDTO cmsApp) {
         return cmsMapper.insertCmsApp(cmsApp);
+    }
+
+    public Page<CmsApplicationDTO> getAppList(Integer userId, SearchVO search, int pageNum, int pageSize) {
+        return cmsMapper.getAppList(userId, search, pageNum, pageSize);
+    }
+
+    public List<CmsApplicationDTO> getAppList(Integer userId) {
+        return cmsMapper.getAppList(userId);
+    }
+
+    public Optional<CmsApplicationDTO> getAppOne(Integer userId, Integer appId) {
+        return cmsMapper.getAppOne(userId, appId);
     }
 
 }
