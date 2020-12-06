@@ -13,7 +13,6 @@ import java.sql.Timestamp;
 @Setter
 public class CmsApplicationDTO implements Serializable {
 
-    @JsonIgnore
     private Integer id;
 
     @JsonIgnore
@@ -34,7 +33,7 @@ public class CmsApplicationDTO implements Serializable {
     private String userContactNo;
 
     @NotEmpty
-    private String userSocialRegNumber;
+    private String userBirthDay;
 
     private String userSign;
 
@@ -65,7 +64,7 @@ public class CmsApplicationDTO implements Serializable {
     private String holderContactNo;
 
     @NotEmpty
-    private String holderSocialRegNumber;
+    private String holderBirthDay;
 
     private String holderSign;
 
