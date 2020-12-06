@@ -4,8 +4,6 @@ import com.palmcms.api.common.Constants;
 import com.palmcms.api.domain.VO.CommonCodeDTO;
 import com.palmcms.api.domain.VO.ResultVO;
 import com.palmcms.api.messages.LocaleCode;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,26 +24,12 @@ public class CodeController {
 
   @ResponseBody
   @GetMapping(value = {"/{category}"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
-  public CommonCodeResultVO code(
+  public ResultVO<List<CommonCodeDTO>> code(
           @PathVariable String category
           , @Value("#{request.getAttribute('selectedLanguage')}") LocaleCode localeCode
   ) {
     List<CommonCodeDTO> codes = codeService.selectCodesByCategory(category, localeCode);
-    return new CommonCodeResultVO(codes);
-  }
-
-}
-
-
-@Getter
-@Setter
-class CommonCodeResultVO extends ResultVO
-{
-  private List<CommonCodeDTO> codes;
-
-  public CommonCodeResultVO(List<CommonCodeDTO> codes)
-  {
-    this.codes = codes;
+    return new ResultVO<>(codes);
   }
 
 }
