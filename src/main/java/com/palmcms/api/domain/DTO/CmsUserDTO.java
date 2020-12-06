@@ -23,6 +23,6 @@ public class CmsUserDTO implements Serializable {
 
     private String cmsProductName;
 
-    private String socialRegNumber;
+    private String birthday;
 
 }
