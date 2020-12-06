@@ -29,5 +29,5 @@ public interface CmsMapper {
 
     List<CmsApplicationDTO> getAppListByUserId(Integer userId);
 
-    Optional<CmsApplicationDTO> getAppOne(Integer userId, Integer appId);
+    Optional<CmsApplicationDTO> getAppOne(Integer userId, Integer churchId, Integer appId);
 }
