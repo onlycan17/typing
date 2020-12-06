@@ -4,40 +4,48 @@
 
 <mapper namespace="com.palmcms.api.cms.CmsMapper">
 
-    <select id="selectUserCmssInfoByUserId" resultType="com.palmcms.api.cms.UserVO">
-        select U.userLoginId, U.userName, U.proviName, U.nickName, U.contactNo
-                , U.socialRegNumber, CH.churchName
-                , U.userStatus, C1.codeName userStatusName
-                , B.unpaidAmt
+    <select id="getCmsAmtInfoByUserId" resultType="com.palmcms.api.cms.CmsAmtInfoVO">
+        select T.userId, T.totalCmsPayAmt, T.totalWithdrawAmt
+        , case when T.totalCmsPayAmt > T.totalWithdrawAmt then T.totalCmsPayAmt - T.totalWithdrawAmt else 0 end unpaidAmt
+        , case when T.totalWithdrawAmt > T.totalCmsPayAmt then T.totalWithdrawAmt - T.totalCmsPayAmt else 0 end depositAmt
+        from (
+            select T1.userId
+            , T1.totalCmsPayAmt
+            , ifnull(sum(W.withdrawAmt), 0) totalWithdrawAmt
+            from (
+                select U.id userId, ifnull(sum(S.cmsPayAmt), 0) totalCmsPayAmt
+                from TO_USER U
+                left outer join TO_SUBSCRIPTION S on U.id = S.buyerId and S.cmsTag like 'CMS%'
+                group by U.id
+            ) T1
+            left outer join CMS_USER CU on CU.userId = T1.userId
+            left outer join CMS_WITHDRAW_HISTORY W on W.payerNo = CU.payerNo and W.status in ( '미납', '완납', '직접수납' )
+            group by T1.userId, T1.totalCmsPayAmt
+        ) T
+        where T.userId = #{userId}
+    </select>
+
+    <select id="getCmsUserByPayerNo" resultType="com.palmcms.api.domain.DTO.CmsUserDTO">
+        select *
+        from CMS_USER
+        where payerNO = #{payerNO}
+    </select>
+
+    <select id="getManagersByChurchId" resultType="com.palmcms.api.domain.DTO.UserDTO">
+        select U.*, CH.parishName, CH.churchName userChurchName
         from TO_USER U
-                 join TO_CHURCH CH on U.churchId = CH.id
-                 left outer join ( select userId, max(cmsbIllDay) cmsbIllDay from CMS_BILL where userId = #{userId}) BM on BM.userId = U.id
-                 left outer join CMS_BILL B on B.userId = BM.userId and B.cmsBillDay = BM.cmsbIllDay
-                 left outer join TO_COMMON_CODE C1 on C1.codeGroup = 'userStatus' and C1.code  = U.userStatus
-        where U.id = #{userId}
+         join TO_USER_AUTHORITY UA on UA.userId = U.id and UA.authorityName = 'ROLE_CUSTOMER'
+        left outer join TO_CHURCH CH on CH.id = U.churchId
+        where U.churchId = #{churcId}
     </select>
 
-    <select id="selectCmsInfoByPayerNo" resultType="com.palmcms.api.cms.CmsUserVO">
-        select CU.payerNo, CU.payerName, CU.payerNo, CU.contactNo, CU.status
-          , case when socialRegNumber is null then birthday else socialRegNumber end socialRegNumber
-        from CMS_USER CU
-        where CU.payerNO = #{payerNO}
-    </select>
-
-    <select id="selectManagersByChurchId" resultType="com.palmcms.api.cms.ManagerVO">
-        select U.userName managerName, U.contactNo managerContactNo from TO_USER_MANAGE_CHURCH UMC
-                                                                             join TO_USER U on U.id = UMC.userId
-                                                                             join TO_USER_AUTHORITY UA on UA.authorityName = 'ROLE_CUSTOMER' and UA.userId = U.id
-        where UMC.churchId = #{churcId}
-    </select>
-
-    <select id="selectApplicationsByUserId" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
+    <select id="getApplicationsByUserId" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
         select * from CMS_APPLICATION
         where userId = #{userId}
         order by id desc
     </select>
 
-    <insert id="insertCmsApp">
+    <insert id="addCmsApp">
         insert into CMS_APPLICATION
         (
             userId, userName, proviName, nickName, userContactNo, userSocialRegNumber, userSign
@@ -57,11 +65,36 @@
 
     </insert>
 
+    <select id="getAppListByUserId" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
+        select A.*, U.userLoginId
+        from CMS_APPLICATION A
+        join TO_USER U on A.userId = U.id
+        where 1 = 1
+            and U.id = #{userId}
+        order by A.id desc
+    </select>
+
     <select id="getAppList" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
         select A.*, U.userLoginId
         from CMS_APPLICATION A
         join TO_USER U on A.userId = U.id
-        where A.userId = #{userId}
+        where 1 = 1
+        <if test='userId != null '>
+            and U.id = #{userId}
+        </if>
+        <if test='churchId != null '>
+            and U.churchId = #{churchId}
+        </if>
+        <if test='keywordType == "userLoginId"'>
+            <if test='keywordText != null and keywordText != ""'>
+                and U.userLoginId like CONCAT('%',#{keywordText},'%')
+            </if>
+        </if>
+        <if test='keywordType == "userName"'>
+            <if test='keywordText != null and keywordText != ""'>
+                and U.userName like CONCAT('%',#{keywordText},'%')
+            </if>
+        </if>
         order by A.id desc
     </select>
 

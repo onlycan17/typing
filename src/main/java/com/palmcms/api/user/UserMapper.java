@@ -27,4 +27,5 @@ public interface UserMapper {
 
     int updateUserTokenExpiredDate(UserTokenDTO userTokenDTO);
 
+    Page<UserDTO> getUserList(Integer churchId, String keywordType, String keywordText);
 }

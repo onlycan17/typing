@@ -56,4 +56,8 @@ public class UserService {
         return userMapper.updateUserTokenExpiredDate(userTokenDTO);
     }
 
+    public Page<UserDTO> getUserList(Integer churchId, String keywordType, String keywordText, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return userMapper.getUserList(churchId, keywordType, keywordText);
+    }
 }

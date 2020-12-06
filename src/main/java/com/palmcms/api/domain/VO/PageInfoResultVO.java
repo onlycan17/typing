@@ -22,7 +22,6 @@ public class PageInfoResultVO<T> extends PageInfo<T> {
   private Integer status = 200;
   private String message = "";
   private String error = "";
-  private T data = null;
 
   private String resultCode = PageInfoResultVO.OK;
 
