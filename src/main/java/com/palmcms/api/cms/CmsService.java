@@ -102,8 +102,8 @@ public class CmsService {
         return cmsMapper.getAppListByUserId(userId);
     }
 
-    public Optional<CmsApplicationDTO> getAppOne(Integer userId, Integer appId) {
-        return cmsMapper.getAppOne(userId, appId);
+    public Optional<CmsApplicationDTO> getAppOne(Integer userId, Integer churchId, Integer appId) {
+        return cmsMapper.getAppOne(userId, churchId, appId);
     }
 
 }

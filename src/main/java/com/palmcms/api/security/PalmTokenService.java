@@ -112,6 +112,7 @@ public class PalmTokenService implements TokenService {
         Collections.singletonList(new SimpleGrantedAuthority(AuthoritiesConstants.USER)));
 
     List<UserRoleDTO> roles = userService.selectUserRoles(userId);
+
     for(UserRoleDTO role : roles)
     {
       if ( role.getAuthorityName().equals(AuthoritiesConstants.MANAGER))

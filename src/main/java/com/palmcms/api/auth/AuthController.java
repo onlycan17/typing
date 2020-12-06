@@ -50,7 +50,7 @@ public class AuthController {
 
 
     @PostMapping(value = {"/login"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
-    public ResultVO<String> login(@Valid LoginDTO loginDTO, BindingResult bindingResult) {
+    public ResultVO<LoginResponseVO> login(@Valid LoginDTO loginDTO, BindingResult bindingResult) {
 
         if ( bindingResult.hasErrors() )
         {
@@ -72,10 +72,11 @@ public class AuthController {
         PalmToken palmToken = tokenService.saveToken(userDTO);
         SecurityUtils.GrantContext(palmToken);
 
-//        LoginResultVO loginResultVO = new LoginResultVO();
-//        loginResultVO.setToken(palmToken.getToken());
-//        loginResultVO.setRoles(userService.selectUserRoleNames(userDTO.getId()));
-        return new ResultVO<>(palmToken.getToken());
+        List<String> roles = userService.selectUserRoleNames(userDTO.getId());
+        roles.add("ROLE_USER");
+
+        LoginResponseVO loginResponseVO = new LoginResponseVO(palmToken.getToken(), userDTO, roles);
+        return new ResultVO<>(loginResponseVO);
     }
 
     @PostMapping(value = "/logout", produces = Constants.APPLICATION_JSON_UTF8_VALUE)

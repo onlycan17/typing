@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -30,28 +29,22 @@ public class UserController {
 
     @GetMapping(value = {"/profile"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value="사용자 정보조회", notes="사용자 정보조회")
-    public UserProfileResultVO profile() {
+    public ResultVO<UserDTO> profile() {
 
-        Optional<PalmToken> oPalmToken = SecurityUtils.getCurrentToken();
-        PalmToken palmToken = oPalmToken.get();
+        UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
 
-        UserDTO userDTO = palmToken.getUserDTO();
+        return new ResultVO<>(userDTO);
+    }
 
-        UserProfileResultVO userProfileResultVO = new UserProfileResultVO();
-        userProfileResultVO.setUserProfile(userDTO);
-//        userProfileResultVO.setRoles(cuboxToken.getAuthorities().toArray());
-        userProfileResultVO.setRoles(userService.selectUserRoleNames(userDTO.getId()));
-        return userProfileResultVO;
+    @GetMapping(value = {"/roles"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value="사용자 권한 조회", notes="사용자 권한 조회")
+    public ResultVO<List<String>> roles() {
+
+        UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
+
+        List<String> roles = userService.selectUserRoleNames(userDTO.getId());
+        return new ResultVO<>(roles);
     }
 
 
-}
-
-@Getter
-@Setter
-class UserProfileResultVO extends ResultVO
-{
-    UserDTO userProfile ;
-
-    List<String> roles;
 }

@@ -89,7 +89,7 @@ public class CmsController {
 
         UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
 
-        Optional<CmsApplicationDTO> oCmsApplicationDTO = cmsService.getAppOne(userDTO.getId(), appId);
+        Optional<CmsApplicationDTO> oCmsApplicationDTO = cmsService.getAppOne(userDTO.getId(), null, appId);
         if ( oCmsApplicationDTO.isEmpty())
         {
             return new ResultVO<>(ResultVO.FAIL, "NOF FOUND");

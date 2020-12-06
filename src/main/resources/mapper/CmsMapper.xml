@@ -102,8 +102,14 @@
         select A.*, U.userLoginId
         from CMS_APPLICATION A
         join TO_USER U on A.userId = U.id
-        where A.userId = #{userId}
+        where 1 = 1
         and A.id = #{appId}
+        <if test='userId != null '>
+            and U.id = #{userId}
+        </if>
+        <if test='churchId != null '>
+            and U.churchId = #{churchId}
+        </if>
     </select>
 
 </mapper>
