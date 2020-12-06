@@ -48,17 +48,17 @@
     <insert id="addCmsApp">
         insert into CMS_APPLICATION
         (
-            userId, userName, proviName, nickName, userContactNo, userSocialRegNumber, userSign
+            userId, userName, proviName, nickName, userContactNo, userBirthDay, userSign
             , productName, productPrice, productServiceMonth
-            , holderName, selfYN, relation, bankCode, acctNo, holderContactNo, holderSocialRegNumber, holderSign
+            , holderName, selfYN, relation, bankCode, acctNo, holderContactNo, holderBirthDay, holderSign
             , cmsAppStatus
             , creationDate, modificationDate
         )
         values
         (
-            #{userId}, #{userName}, #{proviName}, #{nickName}, #{userContactNo}, #{userSocialRegNumber}, #{userSign}
+            #{userId}, #{userName}, #{proviName}, #{nickName}, #{userContactNo}, #{userBirthDay}, #{userSign}
             , #{productName}, #{productPrice}, #{productServiceMonth}
-            , #{holderName}, #{selfYN}, #{relation}, #{bankCode}, #{acctNo}, #{holderContactNo}, #{holderSocialRegNumber}
+            , #{holderName}, #{selfYN}, #{relation}, #{bankCode}, #{acctNo}, #{holderContactNo}, #{holderBirthDay}
             , #{holderSign}, 'NEW'
             , sysdate(), sysdate()
         )
