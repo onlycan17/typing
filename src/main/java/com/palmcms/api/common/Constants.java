@@ -34,10 +34,10 @@ public class Constants {
         public static final String API_LANGUAGE_PREFIX = API_PREFIX + API_LANGUAGE;
 
 
+        public static final String API_USER = "/user";
         public static final String API_CMS = "/cms";
         public static final String API_MANAGER = "/manager";
-        public static final String API_CUSOMER = "/customer";
-        public static final String API_USER = "/user";
+        public static final String API_ADMIN = "/admin";
 
     }
 }

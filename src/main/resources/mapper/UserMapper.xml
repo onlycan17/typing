@@ -54,14 +54,36 @@
     </insert>
 
 
+    <!-- For Manager -->
+
+    <select id="getUserListByManagerUserId" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
+        select U.*, CH.parishName, CH.churchName userChurchName
+        from TO_USER U
+        join TO_CHURCH CH on CH.id = U.churchId
+        join TO_USER_MANAGE_CHURCH UMC on UMC.churchId = U.churchId
+        join TO_USER_AUTHORITY UA on UA.userId = UMC.userId and UA.authorityName = 'ROLE_CUSTOMER'
+        where U.userStatus in ( 'NEW', 'CONFIRMED', 'REJECT' )
+        and UMC.userId = #{managerUserId}
+        <if test='keywordType == "userLoginId"'>
+            <if test='keywordText != null and keywordText != ""'>
+                and U.userLoginId like CONCAT('%',#{keywordText},'%')
+            </if>
+        </if>
+        <if test='keywordType == "userName"'>
+            <if test='keywordText != null and keywordText != ""'>
+                and U.userName like CONCAT('%',#{keywordText},'%')
+            </if>
+        </if>
+        order by U.id desc
+    </select>
+
+    <!-- For Admin -->
+
     <select id="getUserList" resultType="com.palmcms.api.domain.DTO.UserDTO">
         select U.*, CH.parishName, CH.churchName userChurchName
         from TO_USER U
         join TO_CHURCH CH on CH.id = U.churchId
         where U.userStatus in ( 'NEW', 'CONFIRMED', 'REJECT' )
-            <if test='churchId != null '>
-                and U.churchId = #{churchId}
-            </if>
         <if test='keywordType == "userLoginId"'>
             <if test='keywordText != null and keywordText != ""'>
                 and U.userLoginId like CONCAT('%',#{keywordText},'%')

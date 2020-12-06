@@ -25,9 +25,15 @@ public interface CmsMapper {
 
     int addCmsApp(CmsApplicationDTO cmsApp);
 
-    Page<CmsApplicationDTO> getAppList(Integer userId, Integer churchId, String keywordType, String keywordText);
-
     List<CmsApplicationDTO> getAppListByUserId(Integer userId);
 
-    Optional<CmsApplicationDTO> getAppOne(Integer userId, Integer churchId, Integer appId);
+    Optional<CmsApplicationDTO> getAppOneByUserId(Integer userId, Integer appId);
+
+    List<CmsApplicationDTO> getAppListByManagerUserId(Integer managerUserId, String keywordType, String keywordText);
+
+    Optional<CmsApplicationDTO> getAppOneByManagerUserId(Integer managerUserId, Integer appId);
+
+    Page<CmsApplicationDTO> getAppList(String keywordType, String keywordText);
+
+    Optional<CmsApplicationDTO> getAppOne(Integer appId);
 }

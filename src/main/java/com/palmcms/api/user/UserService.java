@@ -56,8 +56,14 @@ public class UserService {
         return userMapper.updateUserTokenExpiredDate(userTokenDTO);
     }
 
-    public Page<UserDTO> getUserList(Integer churchId, String keywordType, String keywordText, int pageNum, int pageSize) {
+
+    public Page<UserDTO> getUserListByManagerUserId(Integer managerUserId, String keywordType, String keywordText, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        return userMapper.getUserList(churchId, keywordType, keywordText);
+        return userMapper.getUserListByManagerUserId(managerUserId, keywordType, keywordText);
+    }
+
+    public Page<UserDTO> getUserList(String keywordType, String keywordText, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return userMapper.getUserList(keywordType, keywordText);
     }
 }
