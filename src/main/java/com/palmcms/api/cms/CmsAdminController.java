@@ -5,15 +5,11 @@ import com.palmcms.api.domain.DTO.CmsApplicationDTO;
 import com.palmcms.api.domain.DTO.UserDTO;
 import com.palmcms.api.domain.VO.PageInfoResultVO;
 import com.palmcms.api.domain.VO.ResultVO;
-import com.palmcms.api.domain.enums.UserStatusType;
 import com.palmcms.api.messages.MessageService;
 import com.palmcms.api.messages.Messages;
 import com.palmcms.api.security.AuthoritiesConstants;
-import com.palmcms.api.security.PalmToken;
 import com.palmcms.api.security.SecurityUtils;
 import io.swagger.annotations.ApiOperation;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -21,21 +17,21 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
 @RestController
-@Secured({AuthoritiesConstants.CUSTOMER})
-@RequestMapping({Constants.API.API_PREFIX + Constants.API.API_MANAGER,
-        Constants.API.API_LANGUAGE_PREFIX + Constants.API.API_MANAGER})
-public class CmsManagerController {
+@Secured({AuthoritiesConstants.SYSTEM})
+@RequestMapping({Constants.API.API_PREFIX + Constants.API.API_ADMIN,
+        Constants.API.API_LANGUAGE_PREFIX + Constants.API.API_ADMIN})
+public class CmsAdminController {
 
     @Autowired
     CmsService cmsService;
 
     @Autowired
     MessageService messageService;
+
 
 
     @PostMapping(value = {"/cms/app"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
@@ -66,7 +62,7 @@ public class CmsManagerController {
 
         UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
 
-        PageInfoResultVO<CmsApplicationDTO> result = new PageInfoResultVO<>(cmsService.getAppListByManagerUserId(userDTO.getId(), keywordType, keywordText, pageNum, pageSize), 10);
+        PageInfoResultVO<CmsApplicationDTO> result = new PageInfoResultVO<>(cmsService.getAppList(keywordType, keywordText, pageNum, pageSize), 10);
 
         return result;
     }
@@ -77,7 +73,7 @@ public class CmsManagerController {
 
         UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
 
-        Optional<CmsApplicationDTO> oCmsApplicationDTO = cmsService.getAppOneByManagerUserId(userDTO.getId(), appId);
+        Optional<CmsApplicationDTO> oCmsApplicationDTO = cmsService.getAppOne(appId);
         if ( oCmsApplicationDTO.isEmpty())
         {
             return new ResultVO<>(ResultVO.FAIL, "NOF FOUND");

@@ -9,14 +9,17 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@Secured({AuthoritiesConstants.CUSTOMER})
-@RequestMapping({Constants.API.API_PREFIX + Constants.API.API_MANAGER,
-        Constants.API.API_LANGUAGE_PREFIX + Constants.API.API_MANAGER})
-public class UserManagerController {
+@Secured({AuthoritiesConstants.SYSTEM})
+@RequestMapping({Constants.API.API_PREFIX + Constants.API.API_ADMIN,
+        Constants.API.API_LANGUAGE_PREFIX + Constants.API.API_ADMIN})
+public class UserAdminController {
 
     @Autowired
     UserService userService;
@@ -31,7 +34,7 @@ public class UserManagerController {
 
         UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
 
-        PageInfoResultVO<UserDTO> result = new PageInfoResultVO<>(userService.getUserListByManagerUserId(userDTO.getId(), keywordType, keywordText, pageNum, pageSize), 10);
+        PageInfoResultVO<UserDTO> result = new PageInfoResultVO<>(userService.getUserList(keywordType, keywordText, pageNum, pageSize), 10);
         return result;
     }
 

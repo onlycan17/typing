@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 @Setter
 public class UserDTO implements Serializable {
 
-    @JsonIgnore
     private Integer id;
 
     private String userLoginId;

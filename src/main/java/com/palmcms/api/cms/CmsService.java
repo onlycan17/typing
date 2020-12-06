@@ -93,17 +93,41 @@ public class CmsService {
         return cmsMapper.addCmsApp(cmsApp);
     }
 
-    public Page<CmsApplicationDTO> getAppList(Integer userId, Integer churchId, String keywordType, String keywordText, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return cmsMapper.getAppList(userId, churchId, keywordType, keywordText);
-    }
+
 
     public List<CmsApplicationDTO> getAppListByUserId(Integer userId) {
         return cmsMapper.getAppListByUserId(userId);
     }
 
-    public Optional<CmsApplicationDTO> getAppOne(Integer userId, Integer churchId, Integer appId) {
-        return cmsMapper.getAppOne(userId, churchId, appId);
+
+    public Optional<CmsApplicationDTO> getAppOneByUserId(Integer userId, Integer appId) {
+        return cmsMapper.getAppOneByUserId(userId, appId);
+    }
+
+
+
+    public List<CmsApplicationDTO> getAppListByManagerUserId(Integer managerUserId, String keywordType, String keywordText, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return cmsMapper.getAppListByManagerUserId(managerUserId, keywordType, keywordText);
+    }
+
+
+    public Optional<CmsApplicationDTO> getAppOneByManagerUserId(Integer managerUserId, Integer appId) {
+        return cmsMapper.getAppOneByManagerUserId(managerUserId, appId);
+    }
+
+
+
+    public Page<CmsApplicationDTO> getAppList(String keywordType, String keywordText, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return cmsMapper.getAppList(keywordType, keywordText);
+    }
+
+
+
+
+    public Optional<CmsApplicationDTO> getAppOne(Integer appId) {
+        return cmsMapper.getAppOne(appId);
     }
 
 }
