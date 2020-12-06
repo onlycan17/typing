@@ -23,7 +23,6 @@ public class CmsApplicationDTO implements Serializable {
     @NotEmpty
     private String userName;
 
-    @NotEmpty
     private String proviName;
 
     @NotEmpty
