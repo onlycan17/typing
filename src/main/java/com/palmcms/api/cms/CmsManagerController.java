@@ -8,7 +8,6 @@ import com.palmcms.api.domain.VO.ResultVO;
 import com.palmcms.api.domain.enums.UserStatusType;
 import com.palmcms.api.messages.MessageService;
 import com.palmcms.api.messages.Messages;
-import com.palmcms.api.security.AuthoritiesConstants;
 import com.palmcms.api.security.PalmToken;
 import com.palmcms.api.security.SecurityUtils;
 import io.swagger.annotations.ApiOperation;
@@ -16,7 +15,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +24,9 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping({Constants.API.API_PREFIX + Constants.API.API_CMS,
-        Constants.API.API_LANGUAGE_PREFIX + Constants.API.API_CMS})
-public class CmsController {
+@RequestMapping({Constants.API.API_PREFIX + Constants.API.API_MANAGER,
+        Constants.API.API_LANGUAGE_PREFIX + Constants.API.API_MANAGER})
+public class CmsManagerController {
 
     @Autowired
     CmsService cmsService;
@@ -37,16 +35,11 @@ public class CmsController {
     MessageService messageService;
 
 
-    @GetMapping(value = {"/info"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = {"/cms"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value="CMS 정보조회", notes="CMS 정보조회")
-    public ResultVO<UserCmsInfoVO> userCms() {
+    public ResultVO<UserCmsInfoVO> userCms(@RequestParam Integer userId) {
 
-        Optional<PalmToken> oPalmToken = SecurityUtils.getCurrentToken();
-        PalmToken palmToken = oPalmToken.get();
-
-        UserDTO userDTO = palmToken.getUserDTO();
-
-        UserCmsInfoVO userCmsInfoVO = cmsService.getUserCmsInfoVO(userDTO);
+        UserCmsInfoVO userCmsInfoVO = cmsService.getUserCmsInfoVO(userId);
 
         return new ResultVO<>(userCmsInfoVO);
     }
@@ -76,11 +69,17 @@ public class CmsController {
 
     @GetMapping(value = {"/app"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value="CMS 신청이력 조회", notes="CMS 신청이력 조회")
-    public ResultVO<List<CmsApplicationDTO>> list() {
+    public PageInfoResultVO<CmsApplicationDTO> list(
+            @RequestParam(required = false) String keywordType
+            , @RequestParam(required = false) String keywordText
+            , @RequestParam(required = false, defaultValue = "1") int pageNum
+            , @RequestParam(required = false, defaultValue = "10") int pageSize) {
 
         UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
 
-        return new ResultVO<>(cmsService.getAppListByUserId(userDTO.getId()));
+        PageInfoResultVO<CmsApplicationDTO> result = new PageInfoResultVO<>(cmsService.getAppList(null, userDTO.getChurchId(), keywordType, keywordText, pageNum, pageSize), 10);
+
+        return result;
     }
 
     @GetMapping(value = {"/app/{appId}"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
@@ -98,4 +97,3 @@ public class CmsController {
         return new ResultVO<>(oCmsApplicationDTO.get());
     }
 }
-

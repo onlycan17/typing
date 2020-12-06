@@ -5,16 +5,18 @@
 <mapper namespace="com.palmcms.api.user.UserMapper">
 
     <select id="selectUserById" resultType="com.palmcms.api.domain.DTO.UserDTO">
-        select *
-        from TO_USER
-        where id = #{id}
+        select U.*, CH.parishName, CH.churchName userChurchName
+        from TO_USER U
+        left outer join TO_CHURCH CH on CH.id = U.churchId
+        where U.id = #{id}
     </select>
 
 
     <select id="selectUserByUserLoginId" resultType="com.palmcms.api.domain.DTO.UserDTO">
-        select *
-        from TO_USER
-        where userLoginId = #{userLoginId}
+        select U.*, CH.parishName, CH.churchName userChurchName
+        from TO_USER U
+        left outer join TO_CHURCH CH on CH.id = U.churchId
+        where U.userLoginId = #{userLoginId}
     </select>
 
 
@@ -52,5 +54,25 @@
     </insert>
 
 
+    <select id="getUserList" resultType="com.palmcms.api.domain.DTO.UserDTO">
+        select U.*, CH.parishName, CH.churchName userChurchName
+        from TO_USER U
+        join TO_CHURCH CH on CH.id = U.churchId
+        where U.userStatus in ( 'NEW', 'CONFIRMED', 'REJECT' )
+            <if test='churchId != null '>
+                and U.churchId = #{churchId}
+            </if>
+        <if test='keywordType == "userLoginId"'>
+            <if test='keywordText != null and keywordText != ""'>
+                and U.userLoginId like CONCAT('%',#{keywordText},'%')
+            </if>
+        </if>
+        <if test='keywordType == "userName"'>
+            <if test='keywordText != null and keywordText != ""'>
+                and U.userName like CONCAT('%',#{keywordText},'%')
+            </if>
+        </if>
+        order by U.id desc
+    </select>
 
 </mapper>

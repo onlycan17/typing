@@ -50,32 +50,32 @@ public class AuthController {
 
 
     @PostMapping(value = {"/login"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
-    public LoginResultVO login(@Valid LoginDTO loginDTO, BindingResult bindingResult) {
+    public ResultVO<String> login(@Valid LoginDTO loginDTO, BindingResult bindingResult) {
 
         if ( bindingResult.hasErrors() )
         {
-            return new LoginResultVO(messageService.getMessage(Messages.AUTH_INVALID_PARAMETER), bindingResult);
+            return new ResultVO(messageService.getMessage(Messages.AUTH_INVALID_PARAMETER), bindingResult);
         }
 
         Optional<UserDTO> oUserDTO = userService.selectUserByUserLoginId(loginDTO.getLoginId());
         if ( oUserDTO.isEmpty() )
         {
-            return new LoginResultVO("fail", messageService.getMessage(Messages.AUTH_USER_NOT_FOUND));
+            return new ResultVO("fail", messageService.getMessage(Messages.AUTH_USER_NOT_FOUND));
         }
 
         UserDTO userDTO = oUserDTO.get();
         if ( ! userService.matchesPassword(loginDTO.getLoginPassword(), userDTO.getUserPasswordHash()))
         {
-            return new LoginResultVO("fail", messageService.getMessage(Messages.AUTH_PASSWORDS_DO_NOT_MATCH));
+            return new ResultVO("fail", messageService.getMessage(Messages.AUTH_PASSWORDS_DO_NOT_MATCH));
         }
 
         PalmToken palmToken = tokenService.saveToken(userDTO);
         SecurityUtils.GrantContext(palmToken);
 
-        LoginResultVO loginResultVO = new LoginResultVO();
-        loginResultVO.setToken(palmToken.getToken());
-        loginResultVO.setRoles(userService.selectUserRoleNames(userDTO.getId()));
-        return loginResultVO;
+//        LoginResultVO loginResultVO = new LoginResultVO();
+//        loginResultVO.setToken(palmToken.getToken());
+//        loginResultVO.setRoles(userService.selectUserRoleNames(userDTO.getId()));
+        return new ResultVO<>(palmToken.getToken());
     }
 
     @PostMapping(value = "/logout", produces = Constants.APPLICATION_JSON_UTF8_VALUE)
@@ -108,26 +108,5 @@ class LoginDTO implements Serializable {
     private String loginPassword;
 }
 
-
-@Getter
-@Setter
-class LoginResultVO extends ResultVO {
-
-    private String token;
-
-    List<String> roles;
-
-    public LoginResultVO(String resultCode, String message) {
-        super(resultCode, message);
-    }
-    public LoginResultVO(String message, BindingResult bindingResult)
-    {
-        super(message, bindingResult);
-    }
-    public LoginResultVO()
-    {
-        super();
-    }
-}
 
 

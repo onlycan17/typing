@@ -2,6 +2,8 @@ package com.palmcms.api.cms;
 
 import com.github.pagehelper.Page;
 import com.palmcms.api.domain.DTO.CmsApplicationDTO;
+import com.palmcms.api.domain.DTO.CmsUserDTO;
+import com.palmcms.api.domain.DTO.UserDTO;
 import com.palmcms.api.domain.VO.SearchVO;
 import org.springframework.stereotype.Component;
 
@@ -11,19 +13,21 @@ import java.util.Optional;
 @Component
 public interface CmsMapper {
 
-    Optional<UserVO> selectUserCmssInfoByUserId(int userId);
+    Optional<CmsAmtInfoVO> getCmsAmtInfoByUserId(Integer userId);
 
-    Optional<CmsUserVO> selectCmsInfoByPayerNo(String payerNo);
 
-    List<ManagerVO> selectManagersByChurchId(int churchId);
 
-    List<CmsApplicationDTO> selectApplicationsByUserId(int userId);
+    Optional<CmsUserDTO> getCmsUserByPayerNo(String payerNo);
 
-    int insertCmsApp(CmsApplicationDTO cmsApp);
+    List<UserDTO> getManagersByChurchId(int churchId);
 
-    Page<CmsApplicationDTO> getAppList(Integer userId, SearchVO search, int pageNum, int pageSize);
+    List<CmsApplicationDTO> getApplicationsByUserId(int userId);
 
-    List<CmsApplicationDTO> getAppList(Integer userId);
+    int addCmsApp(CmsApplicationDTO cmsApp);
+
+    Page<CmsApplicationDTO> getAppList(Integer userId, Integer churchId, String keywordType, String keywordText);
+
+    List<CmsApplicationDTO> getAppListByUserId(Integer userId);
 
     Optional<CmsApplicationDTO> getAppOne(Integer userId, Integer appId);
 }

@@ -26,7 +26,9 @@ public class UserDTO implements Serializable {
 
     private String nickName;
 
-    private String socialRegNumber;
+    private String birthDay;
+
+    private String contactNo;
 
     private UserStatusType userStatus;
 
@@ -44,6 +46,6 @@ public class UserDTO implements Serializable {
 
     private String parishName;
 
-    private String churchName;
+    private String userChurchName;
 
 }

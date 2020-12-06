@@ -27,9 +27,6 @@ public class UserManagerController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    UserManagerService userManagerService;
-
     @GetMapping(value = {"/user"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value="회원목록", notes="회원목록")
     public PageInfoResultVO<UserDTO> userList(
@@ -40,7 +37,7 @@ public class UserManagerController {
 
         UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
 
-        PageInfoResultVO<UserDTO> result = new PageInfoResultVO<>(userManagerService.getUserList(userDTO.getId(), keywordType, keywordText, pageNum, pageSize), 10);
+        PageInfoResultVO<UserDTO> result = new PageInfoResultVO<>(userService.getUserList(userDTO.getChurchId(), keywordType, keywordText, pageNum, pageSize), 10);
         return result;
     }
 
