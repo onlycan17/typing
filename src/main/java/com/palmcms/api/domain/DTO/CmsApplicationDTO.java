@@ -18,8 +18,6 @@ public class CmsApplicationDTO implements Serializable {
     @JsonIgnore
     private Integer userId;
 
-    private String userLoginId;
-
     @NotEmpty
     private String userName;
 
@@ -73,5 +71,17 @@ public class CmsApplicationDTO implements Serializable {
 
     @JsonIgnore
     private Timestamp modificationDate;
+
+
+    // For Display
+    private String cmsAppStatusName;
+
+    private String userLoginId;
+
+    private String department;
+
+    private String parishName;
+
+    private String userChurchName;
 
 }

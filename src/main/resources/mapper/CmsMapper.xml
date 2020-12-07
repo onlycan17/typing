@@ -41,9 +41,18 @@
     </select>
 
     <select id="getApplicationsByUserId" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
-        select * from CMS_APPLICATION
-        where userId = #{userId}
-        order by id desc
+        select A.*
+               , case when cmsAppStatus = 'NEW' then '대기'
+                      when cmsAppStatus = 'RPOC' then '처리중'
+                      when cmsAppStatus = 'DONE' then '등록완료'
+                      when cmsAppStatus = 'FAIL' then '등록실패'
+                 end cmsAppStatusName
+               , U.userLoginId,  CH.parishName, CH.churchName userChurchName, U.department
+        from CMS_APPLICATION A
+        join TO_USER U on U.id = A.userId
+        join TO_CHURCH CH on CH.id = U.churchId
+        where A.userId = #{userId}
+        order by A.id desc
     </select>
 
     <insert id="addCmsApp">
@@ -67,23 +76,19 @@
     </insert>
 
 
-
-
-
-
-
-
-
-
-
-
-
     <!-- For User -->
 
     <select id="getAppListByUserId" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
-        select A.*, U.userLoginId
+        select A.*
+                , case when cmsAppStatus = 'NEW' then '대기'
+                       when cmsAppStatus = 'RPOC' then '처리중'
+                       when cmsAppStatus = 'DONE' then '등록완료'
+                       when cmsAppStatus = 'FAIL' then '등록실패'
+                   end cmsAppStatusName
+                , U.userLoginId CH.parishName, CH.churchName userChurchName, U.department
         from CMS_APPLICATION A
         join TO_USER U on A.userId = U.id
+        join TO_CHURCH CH on CH.id = U.churchId
         where 1 = 1
             and U.id = #{userId}
         order by A.id desc
@@ -91,9 +96,16 @@
 
 
     <select id="getAppOneByUserId" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
-        select A.*, U.userLoginId
+        select A.*
+                , case when cmsAppStatus = 'NEW' then '대기'
+                       when cmsAppStatus = 'RPOC' then '처리중'
+                       when cmsAppStatus = 'DONE' then '등록완료'
+                       when cmsAppStatus = 'FAIL' then '등록실패'
+                   end cmsAppStatusName
+                , U.userLoginId, CH.parishName, CH.churchName userChurchName, U.department
         from CMS_APPLICATION A
         join TO_USER U on A.userId = U.id
+        join TO_CHURCH CH on CH.id = U.churchId
         where 1 = 1
           and U.id = #{userId}
           and A.id = #{appId}
@@ -103,9 +115,16 @@
     <!-- For Manager -->
 
     <select id="getAppListByManagerUserId" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
-        select A.*, U.userLoginId
+        select A.*
+        , case when cmsAppStatus = 'NEW' then '대기'
+        when cmsAppStatus = 'RPOC' then '처리중'
+        when cmsAppStatus = 'DONE' then '등록완료'
+        when cmsAppStatus = 'FAIL' then '등록실패'
+        end cmsAppStatusName
+        , U.userLoginId, CH.parishName, CH.churchName userChurchName, U.department
         from CMS_APPLICATION A
         join TO_USER U on A.userId = U.id
+        join TO_CHURCH CH on CH.id = U.churchId
         join TO_USER_MANAGE_CHURCH UMC on UMC.churchId = U.churchId
         join TO_USER_AUTHORITY UA on UA.userId = UMC.userId and UA.authorityName = 'ROLE_CUSTOMER'
         where 1 = 1
@@ -124,9 +143,16 @@
     </select>
 
     <select id="getAppOneByManagerUserId" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
-        select A.*, U.userLoginId
+        select A.*
+                , case when cmsAppStatus = 'NEW' then '대기'
+                       when cmsAppStatus = 'RPOC' then '처리중'
+                       when cmsAppStatus = 'DONE' then '등록완료'
+                       when cmsAppStatus = 'FAIL' then '등록실패'
+                   end cmsAppStatusName
+                , U.userLoginId, CH.parishName, CH.churchName userChurchName, U.department
         from CMS_APPLICATION A
         join TO_USER U on A.userId = U.id
+        join TO_CHURCH CH on CH.id = U.churchId
         join TO_USER_MANAGE_CHURCH UMC on UMC.churchId = U.churchId
         join TO_USER_AUTHORITY UA on UA.userId = UMC.userId and UA.authorityName = 'ROLE_CUSTOMER'
         where 1 = 1
@@ -141,9 +167,16 @@
 
 
     <select id="getAppList" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
-        select A.*, U.userLoginId
+        select A.*
+        , case when cmsAppStatus = 'NEW' then '대기'
+        when cmsAppStatus = 'RPOC' then '처리중'
+        when cmsAppStatus = 'DONE' then '등록완료'
+        when cmsAppStatus = 'FAIL' then '등록실패'
+        end cmsAppStatusName
+        , U.userLoginId, CH.parishName, CH.churchName userChurchName, U.department
         from CMS_APPLICATION A
         join TO_USER U on A.userId = U.id
+        join TO_CHURCH CH on CH.id = U.churchId
         where 1 = 1
         <if test='keywordType == "userLoginId"'>
             <if test='keywordText != null and keywordText != ""'>
@@ -159,9 +192,16 @@
     </select>
 
     <select id="getAppOne" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
-        select A.*, U.userLoginId
+        select A.*
+                , case when cmsAppStatus = 'NEW' then '대기'
+                       when cmsAppStatus = 'RPOC' then '처리중'
+                       when cmsAppStatus = 'DONE' then '등록완료'
+                       when cmsAppStatus = 'FAIL' then '등록실패'
+                   end cmsAppStatusName
+                , U.userLoginId, CH.parishName, CH.churchName userChurchName, U.department
         from CMS_APPLICATION A
         join TO_USER U on A.userId = U.id
+        join TO_CHURCH CH on CH.id = U.churchId
         where 1 = 1
         and A.id = #{appId}
     </select>
