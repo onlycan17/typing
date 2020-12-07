@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:mysql://palmdb.cywibmtrgivg.ap-northeast-2.rds.amazonaws.com:3306/palm?useUnicode=true&characterEncoding=utf8
+    username: palm
+    password: 5Fz-4nQ-X67-6De
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    maximum-pool-size: 15
+    minimum-idle: 15
+
+server:
+  port: 8080
+
+palmcms:
+  tokenTimeoutMinute: 30
+
+
+

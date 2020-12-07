@@ -28,8 +28,8 @@ public class UserService {
         return userMapper.selectUserById(id);
     }
 
-    public Optional<UserDTO> selectUserByUserLoginId(String loginId) {
-        return userMapper.selectUserByUserLoginId(loginId);
+    public Optional<UserDTO> selectUserByUserLoginId(String userLoginId) {
+        return userMapper.selectUserByUserLoginId(userLoginId);
     }
 
     public boolean matchesPassword(String rawPassword, String encrypted) {

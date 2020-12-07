@@ -37,11 +37,13 @@ public class UserDTO implements Serializable {
 
     private String payerNo;
 
-    @JsonIgnore
     private Timestamp creationDate;
 
     @JsonIgnore
     private Timestamp modificationDate;
+
+
+    private String userStatusName;
 
     private String parishName;
 
