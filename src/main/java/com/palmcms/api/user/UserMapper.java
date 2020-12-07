@@ -15,7 +15,7 @@ public interface UserMapper {
 
     Optional<UserDTO> selectUserById(int id);
 
-    Optional<UserDTO> selectUserByUserLoginId(String loginId);
+    Optional<UserDTO> selectUserByUserLoginId(String userLoginId);
 
     List<UserRoleDTO> selectUserRoles(int userId);
 

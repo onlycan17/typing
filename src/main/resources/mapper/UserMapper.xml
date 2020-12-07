@@ -56,8 +56,12 @@
 
     <!-- For Manager -->
 
-    <select id="getUserListByManagerUserId" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
+    <select id="getUserListByManagerUserId" resultType="com.palmcms.api.domain.DTO.UserDTO">
         select U.*, CH.parishName, CH.churchName userChurchName
+        , case when userStatus = 'NEW' then '대기'
+            when userStatus = 'CONFIRMED' then '승인'
+            when userStatus = 'REJECT' then '승인거절'
+            end userStatusName
         from TO_USER U
         join TO_CHURCH CH on CH.id = U.churchId
         join TO_USER_MANAGE_CHURCH UMC on UMC.churchId = U.churchId
@@ -81,6 +85,10 @@
 
     <select id="getUserList" resultType="com.palmcms.api.domain.DTO.UserDTO">
         select U.*, CH.parishName, CH.churchName userChurchName
+        , case when userStatus = 'NEW' then '대기'
+            when userStatus = 'CONFIRMED' then '승인'
+            when userStatus = 'REJECT' then '승인거절'
+            end userStatusName
         from TO_USER U
         join TO_CHURCH CH on CH.id = U.churchId
         where U.userStatus in ( 'NEW', 'CONFIRMED', 'REJECT' )
