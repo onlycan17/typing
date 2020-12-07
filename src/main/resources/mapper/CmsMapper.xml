@@ -85,7 +85,7 @@
                        when cmsAppStatus = 'DONE' then '등록완료'
                        when cmsAppStatus = 'FAIL' then '등록실패'
                    end cmsAppStatusName
-                , U.userLoginId CH.parishName, CH.churchName userChurchName, U.department
+                , U.userLoginId, CH.parishName, CH.churchName userChurchName, U.department
         from CMS_APPLICATION A
         join TO_USER U on A.userId = U.id
         join TO_CHURCH CH on CH.id = U.churchId
