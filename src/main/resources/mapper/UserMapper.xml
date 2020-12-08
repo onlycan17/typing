@@ -75,7 +75,9 @@
         </if>
         <if test='keywordType == "userName"'>
             <if test='keywordText != null and keywordText != ""'>
-                and U.userName like CONCAT('%',#{keywordText},'%')
+                and ( U.userName like CONCAT('%',#{keywordText},'%')
+                or U.proviName  like CONCAT('%',#{keywordText},'%')
+                )
             </if>
         </if>
         order by U.id desc
@@ -99,7 +101,9 @@
         </if>
         <if test='keywordType == "userName"'>
             <if test='keywordText != null and keywordText != ""'>
-                and U.userName like CONCAT('%',#{keywordText},'%')
+                and ( U.userName like CONCAT('%',#{keywordText},'%')
+                or U.proviName  like CONCAT('%',#{keywordText},'%')
+                )
             </if>
         </if>
         order by U.id desc
