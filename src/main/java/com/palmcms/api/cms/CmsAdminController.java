@@ -85,4 +85,22 @@ public class CmsAdminController {
 
         return new ResultVO<>(oCmsApplicationDTO.get());
     }
+
+    @PostMapping(value = {"/app/{appId}/status"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value="CMS 신청서 상태 변경", notes="CMS 신청서 상태 변경")
+    public ResultVO modStatus(@PathVariable Integer appId
+                , @RequestParam String cmsAppStatus) {
+
+        UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
+
+        Optional<CmsApplicationDTO> oCmsApplicationDTO = cmsService.getAppOne(appId);
+        if ( oCmsApplicationDTO.isEmpty())
+        {
+            return new ResultVO<>(ResultVO.FAIL, "NOF FOUND");
+        }
+
+        cmsService.modAppStatus(appId, cmsAppStatus);
+
+        return new ResultVO();
+    }
 }

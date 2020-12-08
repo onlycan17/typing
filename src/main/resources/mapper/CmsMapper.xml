@@ -43,7 +43,7 @@
     <select id="getApplicationsByUserId" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
         select A.*
                , case when cmsAppStatus = 'NEW' then '대기'
-                      when cmsAppStatus = 'RPOC' then '처리중'
+                      when cmsAppStatus = 'PROC' then '처리중'
                       when cmsAppStatus = 'DONE' then '등록완료'
                       when cmsAppStatus = 'FAIL' then '등록실패'
                  end cmsAppStatusName
@@ -81,7 +81,7 @@
     <select id="getAppListByUserId" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
         select A.*
                 , case when cmsAppStatus = 'NEW' then '대기'
-                       when cmsAppStatus = 'RPOC' then '처리중'
+                       when cmsAppStatus = 'PROC' then '처리중'
                        when cmsAppStatus = 'DONE' then '등록완료'
                        when cmsAppStatus = 'FAIL' then '등록실패'
                    end cmsAppStatusName
@@ -98,7 +98,7 @@
     <select id="getAppOneByUserId" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
         select A.*
                 , case when cmsAppStatus = 'NEW' then '대기'
-                       when cmsAppStatus = 'RPOC' then '처리중'
+                       when cmsAppStatus = 'PROC' then '처리중'
                        when cmsAppStatus = 'DONE' then '등록완료'
                        when cmsAppStatus = 'FAIL' then '등록실패'
                    end cmsAppStatusName
@@ -117,7 +117,7 @@
     <select id="getAppListByManagerUserId" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
         select A.*
         , case when cmsAppStatus = 'NEW' then '대기'
-        when cmsAppStatus = 'RPOC' then '처리중'
+        when cmsAppStatus = 'PROC' then '처리중'
         when cmsAppStatus = 'DONE' then '등록완료'
         when cmsAppStatus = 'FAIL' then '등록실패'
         end cmsAppStatusName
@@ -149,7 +149,7 @@
     <select id="getAppOneByManagerUserId" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
         select A.*
                 , case when cmsAppStatus = 'NEW' then '대기'
-                       when cmsAppStatus = 'RPOC' then '처리중'
+                       when cmsAppStatus = 'PROC' then '처리중'
                        when cmsAppStatus = 'DONE' then '등록완료'
                        when cmsAppStatus = 'FAIL' then '등록실패'
                    end cmsAppStatusName
@@ -173,7 +173,7 @@
     <select id="getAppList" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
         select A.*
         , case when cmsAppStatus = 'NEW' then '대기'
-        when cmsAppStatus = 'RPOC' then '처리중'
+        when cmsAppStatus = 'PROC' then '처리중'
         when cmsAppStatus = 'DONE' then '등록완료'
         when cmsAppStatus = 'FAIL' then '등록실패'
         end cmsAppStatusName
@@ -202,7 +202,7 @@
     <select id="getAppOne" resultType="com.palmcms.api.domain.DTO.CmsApplicationDTO">
         select A.*
                 , case when cmsAppStatus = 'NEW' then '대기'
-                       when cmsAppStatus = 'RPOC' then '처리중'
+                       when cmsAppStatus = 'PROC' then '처리중'
                        when cmsAppStatus = 'DONE' then '등록완료'
                        when cmsAppStatus = 'FAIL' then '등록실패'
                    end cmsAppStatusName
@@ -213,5 +213,13 @@
         where 1 = 1
         and A.id = #{appId}
     </select>
+
+    <update id="modAppStatus">
+        update CMS_APPLICATION
+        set cmsAppStatus = #{cmsAppStatus}
+        , modificationDate = sysdate()
+        where id = #{appId}
+
+    </update>
 
 </mapper>
