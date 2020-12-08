@@ -29,7 +29,7 @@ public interface CmsMapper {
 
     Optional<CmsApplicationDTO> getAppOneByUserId(Integer userId, Integer appId);
 
-    List<CmsApplicationDTO> getAppListByManagerUserId(Integer managerUserId, String keywordType, String keywordText);
+    Page<CmsApplicationDTO> getAppListByManagerUserId(Integer managerUserId, String keywordType, String keywordText);
 
     Optional<CmsApplicationDTO> getAppOneByManagerUserId(Integer managerUserId, Integer appId);
 

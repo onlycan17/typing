@@ -106,7 +106,7 @@ public class CmsService {
 
 
 
-    public List<CmsApplicationDTO> getAppListByManagerUserId(Integer managerUserId, String keywordType, String keywordText, int pageNum, int pageSize) {
+    public Page<CmsApplicationDTO> getAppListByManagerUserId(Integer managerUserId, String keywordType, String keywordText, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         return cmsMapper.getAppListByManagerUserId(managerUserId, keywordType, keywordText);
     }
