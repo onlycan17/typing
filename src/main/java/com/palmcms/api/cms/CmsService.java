@@ -130,4 +130,8 @@ public class CmsService {
         return cmsMapper.getAppOne(appId);
     }
 
+    public int modAppStatus(Integer appId, String cmsAppStatus) {
+        return cmsMapper.modAppStatus(appId, cmsAppStatus);
+    }
+
 }

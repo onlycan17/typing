@@ -36,4 +36,6 @@ public interface CmsMapper {
     Page<CmsApplicationDTO> getAppList(String keywordType, String keywordText);
 
     Optional<CmsApplicationDTO> getAppOne(Integer appId);
+
+    int modAppStatus(Integer appId, String cmsAppStatus);
 }
