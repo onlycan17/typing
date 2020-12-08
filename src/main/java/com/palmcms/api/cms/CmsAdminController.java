@@ -1,8 +1,10 @@
 package com.palmcms.api.cms;
 
+import com.github.pagehelper.Page;
 import com.palmcms.api.common.Constants;
 import com.palmcms.api.domain.DTO.CmsApplicationDTO;
 import com.palmcms.api.domain.DTO.UserDTO;
+import com.palmcms.api.domain.VO.DataTableVO;
 import com.palmcms.api.domain.VO.PageInfoResultVO;
 import com.palmcms.api.domain.VO.ResultVO;
 import com.palmcms.api.messages.MessageService;
@@ -12,6 +14,7 @@ import com.palmcms.api.security.SecurityUtils;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -54,17 +57,18 @@ public class CmsAdminController {
 
     @GetMapping(value = {"/app"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value="CMS 신청이력 조회", notes="CMS 신청이력 조회")
-    public PageInfoResultVO<CmsApplicationDTO> list(
-            @RequestParam(required = false) String keywordType
-            , @RequestParam(required = false) String keywordText
-            , @RequestParam(required = false, defaultValue = "1") int pageNum
-            , @RequestParam(required = false, defaultValue = "10") int pageSize) {
+    public ResponseEntity<DataTableVO<CmsApplicationDTO>> list(@RequestParam("draw") int draw, @RequestParam("start") int start, @RequestParam("length") int length
+            , @RequestParam(required = false) String keywordType
+            , @RequestParam(required = false) String keywordText) {
 
         UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
 
-        PageInfoResultVO<CmsApplicationDTO> result = new PageInfoResultVO<>(cmsService.getAppList(keywordType, keywordText, pageNum, pageSize), 10);
+        //PageInfoResultVO<CmsApplicationDTO> result = new PageInfoResultVO<>(cmsService.getAppList(keywordType, keywordText, pageNum, pageSize), 10);
+        int pageNum = (start / length) + 1; //Calculate page number
+        Page<CmsApplicationDTO> list = cmsService.getAppList(keywordType, keywordText, pageNum, length);
+        DataTableVO dataTable = new DataTableVO<>(draw, start, list.getTotal(), list.getTotal(), list);
 
-        return result;
+        return ResponseEntity.ok(dataTable);
     }
 
     @GetMapping(value = {"/app/{appId}"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
