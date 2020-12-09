@@ -16,6 +16,7 @@
                 select U.id userId, ifnull(sum(S.cmsPayAmt), 0) totalCmsPayAmt
                 from TO_USER U
                 left outer join TO_SUBSCRIPTION S on U.id = S.buyerId and S.cmsTag like 'CMS%'
+                where U.id = #{userId}
                 group by U.id
             ) T1
             left outer join CMS_USER CU on CU.userId = T1.userId

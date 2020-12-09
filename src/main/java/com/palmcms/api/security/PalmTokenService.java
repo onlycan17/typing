@@ -87,12 +87,8 @@ public class PalmTokenService implements TokenService {
     return palmToken;
   }
 
-  public void expireToken(PalmToken palmToken) {
-    UserTokenDTO userTokenDTO = new UserTokenDTO();
-    userTokenDTO.setUserId(palmToken.getUserDTO().getId());
-    userTokenDTO.setToken(palmToken.getToken());
-    userTokenDTO.setExpiredDate(getExpiredDate(0));
-    userService.updateUserTokenExpiredDate(userTokenDTO);
+  public void expireToken(String token) {
+    userService.updateUserTokenExpiredDateExipred(token);
   }
 
   public boolean renewalToken(PalmToken palmToken) {

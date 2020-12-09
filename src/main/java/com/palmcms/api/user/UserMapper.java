@@ -27,6 +27,8 @@ public interface UserMapper {
 
     int updateUserTokenExpiredDate(UserTokenDTO userTokenDTO);
 
+    int updateUserTokenExpiredDateExipred(String token);
+
     Page<UserDTO> getUserListByManagerUserId(Integer managerUserId, String keywordType, String keywordText);
 
     Page<UserDTO> getUserList(String keywordType, String keywordText);

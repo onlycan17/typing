@@ -45,14 +45,22 @@
         values ( #{userId}, #{token}, #{expiredDate} )
     </insert>
 
-    <insert id="updateUserTokenExpiredDate">
+    <update id="updateUserTokenExpiredDate">
         update
             TO_USER_TOKEN
         set
             expiredDate = #{expiredDate}
         where token = #{token}
-    </insert>
+    </update>
 
+    <update id="updateUserTokenExpiredDateExipred">
+        update
+            TO_USER_TOKEN
+        set
+            expiredDate = sysdate()
+        where token = #{token}
+        and expiredDate > sysdate()
+    </update>
 
     <!-- For Manager -->
 

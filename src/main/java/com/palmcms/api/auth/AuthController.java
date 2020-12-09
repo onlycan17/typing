@@ -15,11 +15,9 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -79,9 +77,21 @@ public class AuthController {
         return new ResultVO<>(loginResponseVO);
     }
 
+    @GetMapping(value = "/logout", produces = Constants.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value="로그아웃", notes="로그아웃")
+    public ResultVO logout(@RequestHeader(value="x-auth-token", required = false) String token) {
+
+        if (! StringUtils.isEmpty(token))
+        {
+            tokenService.expireToken(token);
+        }
+
+        return new ResultVO();
+    }
+
     @PostMapping(value = "/logout", produces = Constants.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value="로그아웃", notes="로그아웃")
-    public ResultVO logout(
+    public ResultVO logoutPost(
             HttpServletRequest request
             , HttpServletResponse response
     ) {
@@ -90,7 +100,7 @@ public class AuthController {
             //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             return new ResultVO();
         }
-        tokenService.expireToken(oCuboxToken.get());
+        tokenService.expireToken(oCuboxToken.get().getToken());
 
         SecurityUtils.logout(request, response);
         return new ResultVO();
