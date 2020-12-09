@@ -56,6 +56,10 @@ public class UserService {
         return userMapper.updateUserTokenExpiredDate(userTokenDTO);
     }
 
+    public int updateUserTokenExpiredDateExipred(String token) {
+        return userMapper.updateUserTokenExpiredDateExipred(token);
+    }
+
 
     public Page<UserDTO> getUserListByManagerUserId(Integer managerUserId, String keywordType, String keywordText, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
