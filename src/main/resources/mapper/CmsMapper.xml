@@ -35,7 +35,7 @@
     <select id="getManagersByChurchId" resultType="com.palmcms.api.domain.DTO.UserDTO">
         select U.*, CH.parishName, CH.churchName userChurchName
         from TO_USER U
-        join TO_USER_AUTHORITY UA on UA.userId = U.id and UA.authorityName = 'ROLE_CUSTOMER'
+        join TO_USER_AUTHORITY UA on UA.userId = U.id and UA.authorityName = 'ROLE_MANAGER'
         join TO_USER_MANAGE_CHURCH UMC on UMC.userId = U.id
         join TO_CHURCH CH on CH.id = UMC.churchId
         where UMC.churchId = #{churchId}
@@ -127,7 +127,7 @@
         join TO_USER U on A.userId = U.id
         join TO_CHURCH CH on CH.id = U.churchId
         join TO_USER_MANAGE_CHURCH UMC on UMC.churchId = U.churchId
-        join TO_USER_AUTHORITY UA on UA.userId = UMC.userId and UA.authorityName = 'ROLE_CUSTOMER'
+        join TO_USER_AUTHORITY UA on UA.userId = UMC.userId and UA.authorityName = 'ROLE_MANAGER'
         where 1 = 1
           and UMC.userId = #{managerUserId}
         <if test='keywordType == "userLoginId"'>
@@ -159,7 +159,7 @@
         join TO_USER U on A.userId = U.id
         join TO_CHURCH CH on CH.id = U.churchId
         join TO_USER_MANAGE_CHURCH UMC on UMC.churchId = U.churchId
-        join TO_USER_AUTHORITY UA on UA.userId = UMC.userId and UA.authorityName = 'ROLE_CUSTOMER'
+        join TO_USER_AUTHORITY UA on UA.userId = UMC.userId and UA.authorityName = 'ROLE_MANAGER'
         where 1 = 1
           and UMC.userId = #{managerUserId}
           and A.id = #{appId}
