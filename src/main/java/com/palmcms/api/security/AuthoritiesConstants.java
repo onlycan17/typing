@@ -7,7 +7,7 @@ public class AuthoritiesConstants {
   public final static String MANAGER = "ROLE_MANAGER";
   //public final static String CUSTOMER = "ROLE_CUSTOMER";
 
-  public final static String CS_ALL = "ROLE_CS_USER";
+  public final static String CS_ALL = "ROLE_CS_ALL";
   public final static String CS_BOARD = "ROLE_CS_BOARD";
   public final static String CS_CMS = "ROLE_CS_CMS";
   public final static String CS_CMS_MONITOR = "ROLE_CS_CMS_MONITOR";

@@ -73,7 +73,7 @@
         from TO_USER U
         join TO_CHURCH CH on CH.id = U.churchId
         join TO_USER_MANAGE_CHURCH UMC on UMC.churchId = U.churchId
-        join TO_USER_AUTHORITY UA on UA.userId = UMC.userId and UA.authorityName = 'ROLE_CUSTOMER'
+        join TO_USER_AUTHORITY UA on UA.userId = UMC.userId and UA.authorityName = 'ROLE_MANAGER'
         where U.userStatus in ( 'NEW', 'CONFIRMED', 'REJECT' )
         and UMC.userId = #{managerUserId}
         <if test='keywordType == "userLoginId"'>
