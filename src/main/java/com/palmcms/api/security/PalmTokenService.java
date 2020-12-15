@@ -115,13 +115,21 @@ public class PalmTokenService implements TokenService {
       {
         authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.MANAGER));
       }
-      else if ( role.getAuthorityName().equals(AuthoritiesConstants.CUSTOMER))
+      else if ( role.getAuthorityName().equals(AuthoritiesConstants.CS_ALL))
       {
-        authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.CUSTOMER));
+        authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.CS_ALL));
       }
-      else if ( role.getAuthorityName().equals(AuthoritiesConstants.SYSTEM))
+      else if ( role.getAuthorityName().equals(AuthoritiesConstants.CS_BOARD))
       {
-        authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.SYSTEM));
+        authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.CS_BOARD));
+      }
+      else if ( role.getAuthorityName().equals(AuthoritiesConstants.CS_CMS))
+      {
+        authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.CS_CMS));
+      }
+      else if ( role.getAuthorityName().equals(AuthoritiesConstants.CS_CMS_MONITOR))
+      {
+        authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.CS_CMS_MONITOR));
       }
 
 

@@ -26,10 +26,12 @@ import java.util.stream.Collectors;
 public class PalmAuthenticationProvider implements AuthenticationProvider {
 
     private static final String[] ALLOWED_ROLES = {
-            AuthoritiesConstants.SYSTEM,
             AuthoritiesConstants.USER,
             AuthoritiesConstants.MANAGER,
-            AuthoritiesConstants.CUSTOMER
+            AuthoritiesConstants.CS_ALL,
+            AuthoritiesConstants.CS_CMS,
+            AuthoritiesConstants.CS_BOARD,
+            AuthoritiesConstants.CS_CMS_MONITOR
     };
 
     @Autowired
