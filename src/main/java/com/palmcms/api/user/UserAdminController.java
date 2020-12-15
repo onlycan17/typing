@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@Secured({AuthoritiesConstants.SYSTEM})
+@Secured({AuthoritiesConstants.CS_ALL,AuthoritiesConstants.CS_CMS})
 @RequestMapping({Constants.API.API_PREFIX + Constants.API.API_ADMIN,
         Constants.API.API_LANGUAGE_PREFIX + Constants.API.API_ADMIN})
 public class UserAdminController {

@@ -29,7 +29,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@Secured({AuthoritiesConstants.CUSTOMER})
+@Secured({AuthoritiesConstants.MANAGER})
 @RequestMapping({Constants.API.API_PREFIX + Constants.API.API_MANAGER,
         Constants.API.API_LANGUAGE_PREFIX + Constants.API.API_MANAGER})
 public class CmsManagerController {
