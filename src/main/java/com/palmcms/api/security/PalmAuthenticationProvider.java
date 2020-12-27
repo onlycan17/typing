@@ -1,11 +1,10 @@
 package com.palmcms.api.security;
 
-import com.palmcms.api.domain.enums.UserStatusType;
+import com.palmcms.api.domain.DTO.UserDTO;
 import com.palmcms.api.messages.MessageService;
 import com.palmcms.api.messages.Messages;
 import com.palmcms.api.domain.DTO.UserRoleDTO;
-import com.palmcms.api.domain.DTO.UserDTO;
-import com.palmcms.api.user.UserService;
+import com.palmcms.api.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -58,9 +57,9 @@ public class PalmAuthenticationProvider implements AuthenticationProvider {
                     messageService.getMessage(Messages.AUTH_PASSWORDS_DO_NOT_MATCH));
         }
 
-        if (user.getUserStatus() != UserStatusType.CONFIRMED) {
-            throw new BadCredentialsException(messageService.getMessage(Messages.AUTH_USERSTATUS_IS_NOT_APPROVED));
-        }
+//        if (user.getUserStatus() != UserStatusType.CONFIRMED) {
+//            throw new BadCredentialsException(messageService.getMessage(Messages.AUTH_USERSTATUS_IS_NOT_APPROVED));
+//        }
 
         List<UserRoleDTO> userRoles = userService.selectUserRoles(user.getId());
 

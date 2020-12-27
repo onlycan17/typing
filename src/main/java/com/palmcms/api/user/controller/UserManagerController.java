@@ -1,13 +1,12 @@
-package com.palmcms.api.user;
+package com.palmcms.api.user.controller;
 
 import com.github.pagehelper.Page;
 import com.palmcms.api.common.Constants;
-import com.palmcms.api.domain.DTO.CmsApplicationDTO;
 import com.palmcms.api.domain.DTO.UserDTO;
 import com.palmcms.api.domain.VO.DataTableVO;
-import com.palmcms.api.domain.VO.PageInfoResultVO;
 import com.palmcms.api.security.AuthoritiesConstants;
 import com.palmcms.api.security.SecurityUtils;
+import com.palmcms.api.user.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

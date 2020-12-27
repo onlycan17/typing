@@ -1,0 +1,70 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.palmcms.api.csboard.mapper.CsBoardMapper">
+
+    <sql id="select_from">
+        select A.id boardId
+                , A.boardGroupId, A.csCategoryType, A.writerUserId
+                , A.closeDay
+                , A.deleteYn, A.creationDate, A.modificationDate
+                , B.localeCode, B.title, B.content
+                , U.userName
+        from CS_BOARD A
+                 join CS_BOARD_LOCALE B on B.boardId = A.id
+                 join TO_LOCALE C on C.localeCode = B.localeCode
+                 join TO_USER U on U.id = A.writerUserId
+                 join (
+                select boardId
+                        , ifnull(max(case when A.localeCode = #{localeCode} then orderNo else null end), min(orderNo) ) localeOrderNo
+                from CS_BOARD_LOCALE A
+                         join TO_LOCALE L on L.localeCode = A.localeCode group by boardId
+            ) D on D.boardId = A.id and D.localeOrderNo = C.orderNo
+    </sql>
+    <sql id="where">
+        where A.deleteYn = 'N'
+        and #{boardGroupId} = #{boardGroupId}
+    </sql>
+
+    <select id="fetchAllByBoardGroupId" resultType="com.palmcms.api.csboard.domain.CsBoard">
+        <include refid="select_from"/>
+        <include refid="where"/>
+        order by A.creationDate desc
+    </select>
+
+
+    <select id="fetchAllByBoardGroupIdAndWriteUserId" resultType="com.palmcms.api.csboard.domain.CsBoard">
+        <include refid="select_from"/>
+        <include refid="where"/>
+        and A.writeUserId = #{writeUserId}
+        order by A.creationDate desc
+    </select>
+
+    <select id="fetchFirstByBoardGroupIdAndBoardId" resultType="com.palmcms.api.csboard.domain.CsBoard">
+        <include refid="select_from"/>
+        <include refid="where"/>
+        and  #{boardId} = #{boardId}
+    </select>
+
+    <select id="fetchFirstByBoardGroupIdAndBoardIdAndWriteUserId" resultType="com.palmcms.api.csboard.domain.CsBoard">
+        <include refid="select_from"/>
+        <include refid="where"/>
+        and A.boardId = #{boardId}
+        and A.writeUserId = #{writeUserId}
+    </select>
+
+
+
+
+    <select id="fetchAllByBoardId" resultType="com.palmcms.api.csboard.domain.CsBoardReply">
+        select R.id replyId, R.boardId, R.content, R.adminYn, R.writerUserId, R.creationDate
+                , U.userName
+        from CS_BOARD_REPLY R
+                 join TO_USER U on U.id = R.writerUserId
+        where R.deleteYn = 'N'
+          and R.boardId = #{boardId}
+        order by R.creationDate desc
+    </select>
+
+</mapper>

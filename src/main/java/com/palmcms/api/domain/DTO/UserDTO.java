@@ -29,7 +29,7 @@ public class UserDTO implements Serializable {
 
     private String contactNo;
 
-    private UserStatusType userStatus;
+    //private UserStatusType userStatus;
 
     private Integer churchId;
 
@@ -43,10 +43,10 @@ public class UserDTO implements Serializable {
     private Timestamp modificationDate;
 
 
-    private String userStatusName;
-
-    private String parishName;
-
-    private String userChurchName;
+//    private String userStatusName;
+//
+//    private String parishName;
+//
+//    private String userChurchName;
 
 }

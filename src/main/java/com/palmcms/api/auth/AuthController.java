@@ -1,14 +1,14 @@
 package com.palmcms.api.auth;
 
 import com.palmcms.api.common.Constants;
-import com.palmcms.api.domain.VO.ResultVO;
 import com.palmcms.api.domain.DTO.UserDTO;
+import com.palmcms.api.domain.VO.ResultVO;
 import com.palmcms.api.messages.MessageService;
 import com.palmcms.api.messages.Messages;
 import com.palmcms.api.security.PalmToken;
 import com.palmcms.api.security.PalmTokenService;
 import com.palmcms.api.security.SecurityUtils;
-import com.palmcms.api.user.UserService;
+import com.palmcms.api.user.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,6 +36,7 @@ public class AuthController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
 
     @Autowired
     private UserService userService;

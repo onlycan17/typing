@@ -1,4 +1,4 @@
-package com.palmcms.api.user;
+package com.palmcms.api.user.mapper;
 
 import com.github.pagehelper.Page;
 import com.palmcms.api.domain.DTO.UserDTO;

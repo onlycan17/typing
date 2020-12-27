@@ -1,4 +1,4 @@
-package com.palmcms.api.user;
+package com.palmcms.api.user.controller;
 
 import com.palmcms.api.common.Constants;
 import com.palmcms.api.domain.DTO.UserDTO;

@@ -1,11 +1,11 @@
-package com.palmcms.api.user;
+package com.palmcms.api.user.service;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.palmcms.api.domain.DTO.UserDTO;
 import com.palmcms.api.domain.DTO.UserRoleDTO;
 import com.palmcms.api.domain.DTO.UserTokenDTO;
-import com.palmcms.api.domain.VO.SearchVO;
+import com.palmcms.api.user.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
