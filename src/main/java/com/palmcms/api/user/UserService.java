@@ -25,11 +25,11 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public Optional<UserDTO> selectUserById(int id) {
-        return userMapper.selectUserById(id);
+        return Optional.ofNullable(userMapper.selectUserById(id));
     }
 
     public Optional<UserDTO> selectUserByUserLoginId(String userLoginId) {
-        return userMapper.selectUserByUserLoginId(userLoginId);
+        return Optional.ofNullable(userMapper.selectUserByUserLoginId(userLoginId));
     }
 
     public boolean matchesPassword(String rawPassword, String encrypted) {
@@ -45,7 +45,7 @@ public class UserService {
     }
 
     public Optional<UserTokenDTO> selectUserToken(String token) {
-        return userMapper.selectUserToken(token);
+        return Optional.ofNullable(userMapper.selectUserToken(token));
     }
 
     public int insertUserToken(UserTokenDTO userTokenDTO) {
