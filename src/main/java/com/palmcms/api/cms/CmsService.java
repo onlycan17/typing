@@ -32,7 +32,7 @@ public class CmsService {
     {
 
         // 사용자정보 with 미납금
-        Optional<UserDTO> oUserDTO = userMapper.selectUserById(userId);
+        Optional<UserDTO> oUserDTO = Optional.ofNullable(userMapper.selectUserById(userId));
         if ( oUserDTO.isEmpty() )
         {
             return null;
@@ -47,10 +47,10 @@ public class CmsService {
     {
 
         // 사용자정보 with 미납금
-        Optional<CmsAmtInfoVO> oCmsAmtInfoVO = cmsMapper.getCmsAmtInfoByUserId(userDTO.getId());
+        Optional<CmsAmtInfoVO> oCmsAmtInfoVO = Optional.ofNullable(cmsMapper.getCmsAmtInfoByUserId(userDTO.getId()));
 
         // CMS정보
-        Optional<CmsUserDTO> oCmsUserDTO = cmsMapper.getCmsUserByPayerNo(userDTO.getPayerNo());
+        Optional<CmsUserDTO> oCmsUserDTO = Optional.ofNullable(cmsMapper.getCmsUserByPayerNo(userDTO.getPayerNo()));
 
         // 담당 매니저 목록
         List<UserDTO> managers = cmsMapper.getManagersByChurchId(userDTO.getChurchId());
@@ -73,11 +73,11 @@ public class CmsService {
     }
 
     public Optional<CmsAmtInfoVO> getCmsAmtInfoByUserId(Integer userId) {
-        return cmsMapper.getCmsAmtInfoByUserId(userId);
+        return Optional.ofNullable(cmsMapper.getCmsAmtInfoByUserId(userId));
     }
 
     public Optional<CmsUserDTO> getCmsUserByPayerNo(String payerNo) {
-        return cmsMapper.getCmsUserByPayerNo(payerNo);
+        return Optional.ofNullable(cmsMapper.getCmsUserByPayerNo(payerNo));
     }
 
     public List<UserDTO> getManagersByChurchId(int churchId) {
@@ -101,7 +101,7 @@ public class CmsService {
 
 
     public Optional<CmsApplicationDTO> getAppOneByUserId(Integer userId, Integer appId) {
-        return cmsMapper.getAppOneByUserId(userId, appId);
+        return Optional.ofNullable(cmsMapper.getAppOneByUserId(userId, appId));
     }
 
 
@@ -113,7 +113,7 @@ public class CmsService {
 
 
     public Optional<CmsApplicationDTO> getAppOneByManagerUserId(Integer managerUserId, Integer appId) {
-        return cmsMapper.getAppOneByManagerUserId(managerUserId, appId);
+        return Optional.ofNullable(cmsMapper.getAppOneByManagerUserId(managerUserId, appId));
     }
 
 
@@ -127,7 +127,7 @@ public class CmsService {
 
 
     public Optional<CmsApplicationDTO> getAppOne(Integer appId) {
-        return cmsMapper.getAppOne(appId);
+        return Optional.ofNullable(cmsMapper.getAppOne(appId));
     }
 
     public int modAppStatus(Integer appId, String cmsAppStatus) {

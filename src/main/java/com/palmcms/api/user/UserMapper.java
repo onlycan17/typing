@@ -12,16 +12,15 @@ import java.util.Optional;
 
 @Component
 public interface UserMapper {
+    UserDTO selectUserById(int id);
 
-    Optional<UserDTO> selectUserById(int id);
-
-    Optional<UserDTO> selectUserByUserLoginId(String userLoginId);
+    UserDTO selectUserByUserLoginId(String userLoginId);
 
     List<UserRoleDTO> selectUserRoles(int userId);
 
     List<String> selectUserRoleNames(int userId);
 
-    Optional<UserTokenDTO> selectUserToken(String token);
+    UserTokenDTO selectUserToken(String token);
 
     int insertUserToken(UserTokenDTO userTokenDTO);
 

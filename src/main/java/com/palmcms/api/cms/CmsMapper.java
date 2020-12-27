@@ -13,11 +13,11 @@ import java.util.Optional;
 @Component
 public interface CmsMapper {
 
-    Optional<CmsAmtInfoVO> getCmsAmtInfoByUserId(Integer userId);
+    CmsAmtInfoVO getCmsAmtInfoByUserId(Integer userId);
 
 
 
-    Optional<CmsUserDTO> getCmsUserByPayerNo(String payerNo);
+    CmsUserDTO getCmsUserByPayerNo(String payerNo);
 
     List<UserDTO> getManagersByChurchId(int churchId);
 
@@ -27,15 +27,15 @@ public interface CmsMapper {
 
     List<CmsApplicationDTO> getAppListByUserId(Integer userId);
 
-    Optional<CmsApplicationDTO> getAppOneByUserId(Integer userId, Integer appId);
+    CmsApplicationDTO getAppOneByUserId(Integer userId, Integer appId);
 
     Page<CmsApplicationDTO> getAppListByManagerUserId(Integer managerUserId, String keywordType, String keywordText);
 
-    Optional<CmsApplicationDTO> getAppOneByManagerUserId(Integer managerUserId, Integer appId);
+    CmsApplicationDTO getAppOneByManagerUserId(Integer managerUserId, Integer appId);
 
     Page<CmsApplicationDTO> getAppList(String keywordType, String keywordText);
 
-    Optional<CmsApplicationDTO> getAppOne(Integer appId);
+    CmsApplicationDTO getAppOne(Integer appId);
 
     int modAppStatus(Integer appId, String cmsAppStatus);
 }
