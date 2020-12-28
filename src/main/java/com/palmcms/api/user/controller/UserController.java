@@ -3,20 +3,15 @@ package com.palmcms.api.user.controller;
 import com.palmcms.api.common.Constants;
 import com.palmcms.api.domain.DTO.UserDTO;
 import com.palmcms.api.domain.VO.ResultVO;
-import com.palmcms.api.security.AuthoritiesConstants;
-import com.palmcms.api.security.PalmToken;
 import com.palmcms.api.security.SecurityUtils;
+import com.palmcms.api.user.service.UserService;
 import io.swagger.annotations.ApiOperation;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @Slf4j
 @RestController

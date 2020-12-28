@@ -43,10 +43,10 @@ public class UserDTO implements Serializable {
     private Timestamp modificationDate;
 
 
-//    private String userStatusName;
-//
-//    private String parishName;
-//
-//    private String userChurchName;
+    private String userStatusName;
+
+    private String parishName;
+
+    private String userChurchName;
 
 }

@@ -73,7 +73,7 @@ public class UserService {
     return userMapper.getUserList(keywordType, keywordText);
   }
 
-  // ���� �ٿ�ε��
+  // 엑셀다운로드용
   public List<UserDTO> getUserList(String keywordType, String keywordText) {
     return userMapper.getUserList(keywordType, keywordText);
   }
