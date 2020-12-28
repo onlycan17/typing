@@ -61,13 +61,20 @@ public class UserService {
     }
 
 
-    public Page<UserDTO> getUserListByManagerUserId(Integer managerUserId, String keywordType, String keywordText, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return userMapper.getUserListByManagerUserId(managerUserId, keywordType, keywordText);
-    }
+  public Page<UserDTO> getUserListByManagerUserId(Integer managerUserId, String keywordType,
+      String keywordText, int pageNum, int pageSize) {
+    PageHelper.startPage(pageNum, pageSize);
+    return userMapper.getUserListByManagerUserId(managerUserId, keywordType, keywordText);
+  }
 
-    public Page<UserDTO> getUserList(String keywordType, String keywordText, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return userMapper.getUserList(keywordType, keywordText);
-    }
+  public Page<UserDTO> getUserList(String keywordType, String keywordText, int pageNum,
+      int pageSize) {
+    PageHelper.startPage(pageNum, pageSize);
+    return userMapper.getUserList(keywordType, keywordText);
+  }
+
+  // ���� �ٿ�ε��
+  public List<UserDTO> getUserList(String keywordType, String keywordText) {
+    return userMapper.getUserList(keywordType, keywordText);
+  }
 }
