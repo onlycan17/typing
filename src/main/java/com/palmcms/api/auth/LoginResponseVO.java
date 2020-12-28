@@ -1,6 +1,7 @@
 package com.palmcms.api.auth;
 
 import com.palmcms.api.domain.DTO.UserDTO;
+import com.palmcms.api.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

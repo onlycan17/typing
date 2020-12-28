@@ -1,11 +1,22 @@
 spring:
   datasource:
-    url: jdbc:mysql://175.126.37.181:3306/jldev?useUnicode=true&characterEncoding=utf8
+    jdbc-url: jdbc:mysql://175.126.37.181:3306/jldev?useUnicode=true&characterEncoding=utf8
     username: developer
     password: dev!23
     driver-class-name: com.mysql.cj.jdbc.Driver
-    maximum-pool-size: 15
-    minimum-idle: 15
+    hikari:
+      auto-commit: true
+      maximum-pool-size: 15
+      minimum-idle: 15
+  jpa:
+    show-sql: true
+    database: mysql
+
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
 
 server:
   port: 8091

@@ -29,7 +29,7 @@ public class UserDTO implements Serializable {
 
     private String contactNo;
 
-    private UserStatusType userStatus;
+    //private UserStatusType userStatus;
 
     private Integer churchId;
 

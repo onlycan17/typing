@@ -19,6 +19,15 @@ import javax.sql.DataSource;
         "com.palmcms.api"
 }, sqlSessionFactoryRef = "db2SqlSessionFactory")
 public class DatasourceMybatisConfig {
+
+//  @Autowired
+//  private PoolProperties poolProperties;
+
+//  @Bean(name = "db2DataSource")
+//  public DataSource db2DataSource() {
+//    return HikariDatasourceBuilder.toJson(poolProperties);
+//  }
+
     @Bean(name = "db2SqlSessionFactory")
     public SqlSessionFactory db2SqlSessionFactory(
             @Qualifier("dataSource") DataSource db2DataSource

@@ -2,8 +2,9 @@ package com.palmcms.api.security;
 
 import com.palmcms.api.domain.DTO.UserRoleDTO;
 import com.palmcms.api.domain.DTO.UserDTO;
-import com.palmcms.api.user.UserService;
+import com.palmcms.api.user.service.UserService;
 import com.palmcms.api.domain.DTO.UserTokenDTO;
+import com.palmcms.api.user.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,6 +47,23 @@ public class PalmTokenService implements TokenService {
     cal.add(Calendar.MINUTE, minutes);
     ts.setTime(cal.getTime().getTime()); // or
     return ts;
+  }
+
+  public PalmToken saveToken(User userDTO) {
+
+    String token = UUID.randomUUID().toString();
+
+    UserTokenDTO userTokenDTO = new UserTokenDTO();
+    userTokenDTO.setUserId(userDTO.getId());
+    userTokenDTO.setToken(token);
+    userTokenDTO.setExpiredDate(getExpiredDate(tokenTimeoutMinute));
+
+    userService.insertUserToken(userTokenDTO);
+
+    PalmToken palmToken = new PalmToken(userDTO.getUserLoginId(), token, convertAuthorities(userDTO.getId()));
+    palmToken.setDetails(userDTO);
+
+    return palmToken;
   }
 
   public PalmToken saveToken(UserDTO userDTO) {

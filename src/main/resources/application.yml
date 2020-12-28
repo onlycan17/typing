@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: cmsapi_api
+  jpa:
+    open-in-view: true
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database: mysql
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+  main:
+    allow-bean-definition-overriding: true
+
+  mvc:
+    throw-exception-if-no-handler-found: true
+
+server:
+  error:
+    whitelabel:
+      enabled: false
