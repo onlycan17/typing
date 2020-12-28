@@ -33,6 +33,10 @@ public class UserDTO implements Serializable {
 
     private Integer churchId;
 
+    private String department;
+
+    private String position;
+
     private String isCmsStop;
 
     private String payerNo;
@@ -48,5 +52,7 @@ public class UserDTO implements Serializable {
     private String parishName;
 
     private String userChurchName;
+
+    private String youngYn;
 
 }

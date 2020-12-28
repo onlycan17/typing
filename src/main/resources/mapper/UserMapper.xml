@@ -6,16 +6,20 @@
 
     <select id="selectUserById" resultType="com.palmcms.api.domain.DTO.UserDTO">
         select U.*, CH.parishName, CH.churchName userChurchName
+                , case when UY.userId is not null then 'Y' else 'N' end youngYn
         from TO_USER U
         left outer join TO_CHURCH CH on CH.id = U.churchId
+        left outer join TO_USER_YOUNG UY on UY.userId = U.id and UY.baseYear = '2021'
         where U.id = #{id}
     </select>
 
 
     <select id="selectUserByUserLoginId" resultType="com.palmcms.api.domain.DTO.UserDTO">
         select U.*, CH.parishName, CH.churchName userChurchName
+                , case when UY.userId is not null then 'Y' else 'N' end youngYn
         from TO_USER U
         left outer join TO_CHURCH CH on CH.id = U.churchId
+        left outer join TO_USER_YOUNG UY on UY.userId = U.id and UY.baseYear = '2021'
         where U.userLoginId = #{userLoginId}
     </select>
 
@@ -70,10 +74,12 @@
             when userStatus = 'CONFIRMED' then '승인'
             when userStatus = 'REJECT' then '승인거절'
             end userStatusName
+        , case when UY.userId is not null then 'Y' else 'N' end youngYn
         from TO_USER U
         join TO_CHURCH CH on CH.id = U.churchId
         join TO_USER_MANAGE_CHURCH UMC on UMC.churchId = U.churchId
         join TO_USER_AUTHORITY UA on UA.userId = UMC.userId and UA.authorityName = 'ROLE_MANAGER'
+        left outer join TO_USER_YOUNG UY on UY.userId = U.id and UY.baseYear = '2021'
         where U.userStatus in ( 'NEW', 'CONFIRMED', 'REJECT' )
         and UMC.userId = #{managerUserId}
         <if test='keywordType == "userLoginId"'>
@@ -88,8 +94,48 @@
                 )
             </if>
         </if>
+        <if test='keywordType == "department"'>
+            <if test='keywordText != null and keywordText != ""'>
+                and U.department like CONCAT('%',#{keywordText},'%')
+            </if>
+        </if>
+        <if test='keywordType == "position"'>
+            <if test='keywordText != null and keywordText != ""'>
+                and U.position like CONCAT('%',#{keywordText},'%')
+            </if>
+        </if>
         order by U.id desc
     </select>
+
+    <update id="updateUserStatusByManagerUserId">
+        update TO_USER U
+        join TO_CHURCH CH on CH.id = U.churchId
+        join TO_USER_MANAGE_CHURCH UMC on UMC.churchId = U.churchId
+        join TO_USER_AUTHORITY UA on UA.userId = UMC.userId and UA.authorityName = 'ROLE_MANAGER'
+        set U.userStatus = #{userStatus}
+        where UMC.userId = #{managerUserId}
+        and U.id in
+        <foreach collection="userIdList" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <insert id="saveUserYoungByManagerUserId">
+        insert into TO_USER_YOUNG ( userId, baseYear )
+        select U.id, '2021' baseYear from (
+            select U.id from TO_USER U
+            join TO_CHURCH CH on CH.id = U.churchId
+            join TO_USER_MANAGE_CHURCH UMC on UMC.churchId = U.churchId
+            join TO_USER_AUTHORITY UA on UA.userId = UMC.userId and UA.authorityName = 'ROLE_MANAGER'
+            where UMC.userId = #{managerUserId}
+            and U.id in
+            <foreach collection="userIdList" item="item" index="index" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+        ) U
+        left outer join TO_USER_YOUNG UY on UY.userId = U.id
+        where UY.userId is null
+    </insert>
 
     <!-- For Admin -->
 
@@ -99,8 +145,10 @@
             when userStatus = 'CONFIRMED' then '승인'
             when userStatus = 'REJECT' then '승인거절'
             end userStatusName
+        , case when UY.userId is not null then 'Y' else 'N' end youngYn
         from TO_USER U
         join TO_CHURCH CH on CH.id = U.churchId
+        left outer join TO_USER_YOUNG UY on UY.userId = U.id and UY.baseYear = '2021'
         where U.userStatus in ( 'NEW', 'CONFIRMED', 'REJECT' )
         <if test='keywordType == "userLoginId"'>
             <if test='keywordText != null and keywordText != ""'>
@@ -114,7 +162,38 @@
                 )
             </if>
         </if>
+        <if test='keywordType == "department"'>
+            <if test='keywordText != null and keywordText != ""'>
+                and U.department like CONCAT('%',#{keywordText},'%')
+            </if>
+        </if>
+        <if test='keywordType == "position"'>
+            <if test='keywordText != null and keywordText != ""'>
+                and U.position like CONCAT('%',#{keywordText},'%')
+            </if>
+        </if>
         order by U.id desc
     </select>
+
+    <update id="updateUserStatus">
+        update TO_USER U
+        set U.userStatus = #{userStatus}
+        where U.id in
+        <foreach collection="userIdList" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </update>
+
+
+    <insert id="saveUserYoung">
+        insert into TO_USER_YOUNG ( userId, baseYear )
+        select U.id, '2021' baseYear from TO_USER U
+        left outer join TO_USER_YOUNG UY on UY.userId = U.id
+        where  U.id in
+        <foreach collection="userIdList" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        and UY.userId is null
+    </insert>
 
 </mapper>

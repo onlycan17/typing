@@ -14,6 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Slf4j
 @RestController
 @Secured({AuthoritiesConstants.MANAGER})
@@ -43,5 +47,21 @@ public class UserManagerController {
 
     }
 
+    @PatchMapping(value = {"/user/approve"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value="회원승인", notes="회원승인")
+    public ResponseEntity approve(@RequestParam String userIdList) {
+        UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
+        List<String> convertedUserIdList = Stream.of(userIdList.split(",", -1)).collect(Collectors.toList());
+        userService.approveForManager(userDTO.getId(), convertedUserIdList);
+        return ResponseEntity.ok().build();
+    }
 
+    @PatchMapping(value = {"/user/young"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value="청소년승인", notes="청소년승인")
+    public ResponseEntity young(@RequestParam String userIdList) {
+        UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
+        List<String> convertedUserIdList = Stream.of(userIdList.split(",", -1)).collect(Collectors.toList());
+        userService.youngForManager(userDTO.getId(), convertedUserIdList);
+        return ResponseEntity.ok().build();
+    }
 }
