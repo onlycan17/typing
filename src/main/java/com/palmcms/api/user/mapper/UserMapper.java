@@ -5,6 +5,7 @@ import com.palmcms.api.domain.DTO.UserDTO;
 import com.palmcms.api.domain.DTO.UserRoleDTO;
 import com.palmcms.api.domain.DTO.UserTokenDTO;
 import com.palmcms.api.domain.VO.SearchVO;
+import com.palmcms.api.domain.enums.UserStatusType;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -32,4 +33,11 @@ public interface UserMapper {
 
     Page<UserDTO> getUserList(String keywordType, String keywordText);
 
+    int updateUserStatusByManagerUserId(Integer managerUserId, List<String> userIdList, UserStatusType userStatus);
+
+    int updateUserStatus(Integer adminUserId, List<String> userIdList, UserStatusType userStatus);
+
+    int saveUserYoungByManagerUserId(Integer managerUserId, List<String> userIdList);
+
+    int saveUserYoung(Integer adminUserId, List<String> userIdList);
 }

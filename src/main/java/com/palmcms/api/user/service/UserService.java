@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.palmcms.api.domain.DTO.UserDTO;
 import com.palmcms.api.domain.DTO.UserRoleDTO;
 import com.palmcms.api.domain.DTO.UserTokenDTO;
+import com.palmcms.api.domain.enums.UserStatusType;
 import com.palmcms.api.user.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,4 +78,27 @@ public class UserService {
   public List<UserDTO> getUserList(String keywordType, String keywordText) {
     return userMapper.getUserList(keywordType, keywordText);
   }
+
+  public int approveForManager(Integer managerUserId, List<String> userIdList)
+  {
+    UserStatusType userStatus = UserStatusType.CONFIRMED;
+    return userMapper.updateUserStatusByManagerUserId(managerUserId, userIdList, userStatus);
+  }
+
+  public int approveForAdmin(Integer adminUserId, List<String> userIdList)
+  {
+    UserStatusType userStatus = UserStatusType.CONFIRMED;
+    return userMapper.updateUserStatus(adminUserId, userIdList, userStatus);
+  }
+
+
+    public int youngForManager(Integer managerUserId, List<String> userIdList)
+    {
+        return userMapper.saveUserYoungByManagerUserId(managerUserId, userIdList);
+    }
+
+    public int youngForAdmin(Integer adminUserId, List<String> userIdList)
+    {
+        return userMapper.saveUserYoung(adminUserId, userIdList);
+    }
 }

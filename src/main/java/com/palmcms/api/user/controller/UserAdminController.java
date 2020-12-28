@@ -11,16 +11,14 @@ import com.palmcms.api.user.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -73,6 +71,24 @@ public class UserAdminController {
         }
         new ExcelGenarator().userListToExcel(dataArray, strTitle, itemList, response);
 
+    }
+
+    @PatchMapping(value = {"/user/approve"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value="회원승인", notes="회원승인")
+    public ResponseEntity approve(@RequestParam String userIdList) {
+        UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
+        List<String> convertedUserIdList = Stream.of(userIdList.split(",", -1)).collect(Collectors.toList());
+        userService.approveForAdmin(userDTO.getId(), convertedUserIdList);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping(value = {"/user/young"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
+    @ApiOperation(value="청소년승인", notes="청소년승인")
+    public ResponseEntity young(@RequestParam String userIdList) {
+        UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
+        List<String> convertedUserIdList = Stream.of(userIdList.split(",", -1)).collect(Collectors.toList());
+        userService.youngForAdmin(userDTO.getId(), convertedUserIdList);
+        return ResponseEntity.ok().build();
     }
 
 }
