@@ -1,3 +1,7 @@
+pagehelper:
+  helper-dialect: mysql
+  reasonalble: true
+
 spring:
   application:
     name: cmsapi_api
