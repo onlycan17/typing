@@ -59,16 +59,23 @@ public class UserAdminController {
 
         UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
         List<UserDTO> list = userService.getUserList(keywordType, keywordText);
-        String[][] dataArray = new String[list.size()][8];
+        String[][] dataArray = new String[list.size()][9];
         int i = 0;
         for (UserDTO userData : list) {
+            String strYoung = "";
+            if (userData.getYoungYn().equals("Y")) {
+                strYoung = "○";
+            } else {
+                strYoung = "";
+            }
             dataArray[i][1] = userData.getUserLoginId();
             dataArray[i][2] = userData.getUserName();
             dataArray[i][3] = userData.getUserChurchName();
             dataArray[i][4] = userData.getDepartment();
             dataArray[i][5] = userData.getPosition();
-            dataArray[i][6] = userData.getUserStatusName();
-            dataArray[i][7] = userData.getCreationDate().toString();
+            dataArray[i][6] = strYoung;
+            dataArray[i][7] = userData.getUserStatusName();
+            dataArray[i][8] = userData.getCreationDate().toString();
             i++;
         }
         new ExcelGenarator().userListToExcel(dataArray, strTitle, itemList, response);
