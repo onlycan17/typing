@@ -95,38 +95,46 @@ public class CmsService {
     }
 
 
-    public Optional<CmsApplicationDTO> getAppOneByUserId(Integer userId, Integer appId) {
-        return Optional.ofNullable(cmsMapper.getAppOneByUserId(userId, appId));
-    }
+  public Optional<CmsApplicationDTO> getAppOneByUserId(Integer userId, Integer appId) {
+    return Optional.ofNullable(cmsMapper.getAppOneByUserId(userId, appId));
+  }
 
 
+  public Page<CmsApplicationDTO> getAppListByManagerUserId(Integer managerUserId,
+      String keywordType, String keywordText, int pageNum, int pageSize) {
+    PageHelper.startPage(pageNum, pageSize);
+    return cmsMapper.getAppListByManagerUserId(managerUserId, keywordType, keywordText);
+  }
 
-    public Page<CmsApplicationDTO> getAppListByManagerUserId(Integer managerUserId, String keywordType, String keywordText, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return cmsMapper.getAppListByManagerUserId(managerUserId, keywordType, keywordText);
-    }
-
-
-    public Optional<CmsApplicationDTO> getAppOneByManagerUserId(Integer managerUserId, Integer appId) {
-        return Optional.ofNullable(cmsMapper.getAppOneByManagerUserId(managerUserId, appId));
-    }
-
-
-
-    public Page<CmsApplicationDTO> getAppList(String keywordType, String keywordText, int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        return cmsMapper.getAppList(keywordType, keywordText);
-    }
+  public List<CmsApplicationDTO> getAppListByManagerUserId(Integer managerUserId,
+      String keywordType, String keywordText) {
+    return cmsMapper.getAppListByManagerUserId(managerUserId, keywordType, keywordText);
+  }
 
 
+  public Optional<CmsApplicationDTO> getAppOneByManagerUserId(Integer managerUserId,
+      Integer appId) {
+    return Optional.ofNullable(cmsMapper.getAppOneByManagerUserId(managerUserId, appId));
+  }
 
 
-    public Optional<CmsApplicationDTO> getAppOne(Integer appId) {
-        return Optional.ofNullable(cmsMapper.getAppOne(appId));
-    }
+  public Page<CmsApplicationDTO> getAppList(String keywordType, String keywordText, int pageNum,
+      int pageSize) {
+    PageHelper.startPage(pageNum, pageSize);
+    return cmsMapper.getAppList(keywordType, keywordText);
+  }
 
-    public int modAppStatus(Integer appId, String cmsAppStatus) {
-        return cmsMapper.modAppStatus(appId, cmsAppStatus);
+  public List<CmsApplicationDTO> getAppList(String keywordType, String keywordText) {
+    return cmsMapper.getAppList(keywordType, keywordText);
+  }
+
+
+  public Optional<CmsApplicationDTO> getAppOne(Integer appId) {
+    return Optional.ofNullable(cmsMapper.getAppOne(appId));
+  }
+
+  public int modAppStatus(Integer appId, String cmsAppStatus) {
+    return cmsMapper.modAppStatus(appId, cmsAppStatus);
     }
 
 }
