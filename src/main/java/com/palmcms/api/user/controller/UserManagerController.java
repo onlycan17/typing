@@ -61,7 +61,8 @@ public class UserManagerController {
         , HttpServletResponse response) throws IOException {
 
         UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
-        List<UserDTO> list = userService.getUserList(keywordType, keywordText);
+        List<UserDTO> list = userService
+            .getUserListByManagerUserId(userDTO.getId(), keywordType, keywordText);
         String[][] dataArray = new String[list.size()][9];
         int i = 0;
         for (UserDTO userData : list) {
