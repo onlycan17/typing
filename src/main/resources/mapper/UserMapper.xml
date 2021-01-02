@@ -80,8 +80,17 @@
         join TO_USER_MANAGE_CHURCH UMC on UMC.churchId = U.churchId
         join TO_USER_AUTHORITY UA on UA.userId = UMC.userId and UA.authorityName = 'ROLE_MANAGER'
         left outer join TO_USER_YOUNG UY on UY.userId = U.id and UY.baseYear = '2021'
-        where U.userStatus in ( 'NEW', 'CONFIRMED', 'REJECT' )
-        and UMC.userId = #{managerUserId}
+        where UMC.userId = #{managerUserId}
+        and U.userStatus in ( 'NEW', 'CONFIRMED', 'REJECT' )
+        <if test='userStatus != null and userStatus != ""'>
+            and U.userStatus = #{userStatus}
+        </if>
+        <if test='churchName != null and churchName != ""'>
+            and CH.churchName like CONCAT('%',#{churchName},'%')
+        </if>
+        <if test='youngYn != null and youngYn != ""'>
+            and case when UY.userId is not null then 'Y' else 'N' end = #{youngYn}
+        </if>
         <if test='keywordType == "userLoginId"'>
             <if test='keywordText != null and keywordText != ""'>
                 and U.userLoginId like CONCAT('%',#{keywordText},'%')
@@ -150,6 +159,16 @@
         join TO_CHURCH CH on CH.id = U.churchId
         left outer join TO_USER_YOUNG UY on UY.userId = U.id and UY.baseYear = '2021'
         where U.userStatus in ( 'NEW', 'CONFIRMED', 'REJECT' )
+        <if test='userStatus != null and userStatus != ""'>
+            and U.userStatus = #{userStatus}
+        </if>
+        <if test='churchName != null and churchName != ""'>
+            and CH.churchName like CONCAT('%',#{churchName},'%')
+        </if>
+        and U.userStatus in ( 'NEW', 'CONFIRMED', 'REJECT' )
+        <if test='youngYn != null and youngYn != ""'>
+            and case when UY.userId is not null then 'Y' else 'N' end = #{youngYn}
+        </if>
         <if test='keywordType == "userLoginId"'>
             <if test='keywordText != null and keywordText != ""'>
                 and U.userLoginId like CONCAT('%',#{keywordText},'%')
