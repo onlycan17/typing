@@ -34,6 +34,9 @@ public class UserManagerController {
     @GetMapping(value = {"/user"}, produces = Constants.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value="회원목록", notes="회원목록")
     public ResponseEntity<DataTableVO<UserDTO>> userList(@RequestParam("draw") int draw, @RequestParam("start") int start, @RequestParam("length") int length
+            , @RequestParam(required = false) String churchName
+            , @RequestParam(required = false) String userStatus
+            , @RequestParam(required = false) String youngYn
             , @RequestParam(required = false) String keywordType
             , @RequestParam(required = false) String keywordText) {
 
@@ -44,7 +47,9 @@ public class UserManagerController {
 
         int pageNum = (start / length) + 1; //Calculate page number
         Page<UserDTO> list = userService
-            .getUserListByManagerUserId(userDTO.getId(), keywordType, keywordText, pageNum, length);
+            .getUserListByManagerUserId(userDTO.getId(), keywordType, keywordText
+                    , churchName, userStatus, youngYn
+                    , pageNum, length);
         DataTableVO dataTable = new DataTableVO(draw, start, list.getTotal(), list.getTotal(),
             list);
 
@@ -56,13 +61,17 @@ public class UserManagerController {
     @ApiOperation(value = "회원목록엑셀다운로드", notes = "회원목록엑셀다운로드")
     public void userList(@RequestParam(value = "ItemList[]") List<String> itemList
         , @RequestParam(value = "title") String strTitle
+        , @RequestParam(required = false) String churchName
+        , @RequestParam(required = false) String userStatus
+        , @RequestParam(required = false) String youngYn
         , @RequestParam(required = false) String keywordType
         , @RequestParam(required = false) String keywordText
         , HttpServletResponse response) throws IOException {
 
         UserDTO userDTO = SecurityUtils.getCurrentToken().get().getUserDTO();
         List<UserDTO> list = userService
-            .getUserListByManagerUserId(userDTO.getId(), keywordType, keywordText);
+            .getUserListByManagerUserId(userDTO.getId(), keywordType, keywordText
+                    , churchName, userStatus, youngYn);
         String[][] dataArray = new String[list.size()][9];
         int i = 0;
         for (UserDTO userData : list) {

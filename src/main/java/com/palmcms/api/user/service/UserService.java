@@ -63,25 +63,27 @@ public class UserService {
 
 
   public Page<UserDTO> getUserListByManagerUserId(Integer managerUserId, String keywordType,
-      String keywordText, int pageNum, int pageSize) {
+      String keywordText, String churchName, String userStatus, String youngYn, int pageNum, int pageSize) {
     PageHelper.startPage(pageNum, pageSize);
-    return userMapper.getUserListByManagerUserId(managerUserId, keywordType, keywordText);
+    return userMapper.getUserListByManagerUserId(managerUserId, keywordType, keywordText
+            , churchName, userStatus, youngYn);
   }
 
   public List<UserDTO> getUserListByManagerUserId(Integer managerUserId, String keywordType,
-      String keywordText) {
-    return userMapper.getUserListByManagerUserId(managerUserId, keywordType, keywordText);
+      String keywordText, String churchName, String userStatus, String youngYn) {
+    return userMapper.getUserListByManagerUserId(managerUserId, keywordType, keywordText
+            , churchName, userStatus, youngYn);
   }
 
-  public Page<UserDTO> getUserList(String keywordType, String keywordText, int pageNum,
+  public Page<UserDTO> getUserList(String keywordType, String keywordText, String churchName, String userStatus, String youngYn, int pageNum,
       int pageSize) {
     PageHelper.startPage(pageNum, pageSize);
-    return userMapper.getUserList(keywordType, keywordText);
+    return userMapper.getUserList(keywordType, keywordText, churchName, userStatus, youngYn);
   }
 
   // 엑셀다운로드용
-  public List<UserDTO> getUserList(String keywordType, String keywordText) {
-    return userMapper.getUserList(keywordType, keywordText);
+  public List<UserDTO> getUserList(String keywordType, String keywordText, String churchName, String userStatus, String youngYn) {
+    return userMapper.getUserList(keywordType, keywordText, churchName, userStatus, youngYn);
   }
 
   public int approveForManager(Integer managerUserId, List<String> userIdList)
