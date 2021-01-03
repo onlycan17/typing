@@ -41,6 +41,8 @@ public class UserDTO implements Serializable {
 
     private String payerNo;
 
+    private String userStatus;
+
     private Timestamp creationDate;
 
     @JsonIgnore

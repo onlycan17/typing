@@ -48,7 +48,11 @@ public class CmsService {
         Optional<CmsUserDTO> oCmsUserDTO = Optional.ofNullable(cmsMapper.getCmsUserByPayerNo(userDTO.getPayerNo()));
 
         // 담당 매니저 목록
-        List<UserDTO> managers = cmsMapper.getManagersByChurchId(userDTO.getChurchId());
+        List<UserDTO> managers = null;
+        if ( userDTO.getChurchId() != null )
+        {
+            managers = cmsMapper.getManagersByChurchId(userDTO.getChurchId());
+        }
 
 
         UserCmsInfoVO userCmsInfoVO = new UserCmsInfoVO();
