@@ -60,6 +60,13 @@ public class CmsController {
             return new ResultVO(messageService.getMessage(Messages.AUTH_INVALID_PARAMETER), bindingResult);
         }
 
+        if ( cmsApp.getProductPrice() == 5500 ) {
+            cmsApp.setProductName("뉴프리미엄55");
+        }
+        else if ( cmsApp.getProductPrice() == 3300 ) {
+            cmsApp.setProductName("뉴프리미엄33");
+        }
+
         Optional<PalmToken> oPalmToken = SecurityUtils.getCurrentToken();
         PalmToken palmToken = oPalmToken.get();
 
